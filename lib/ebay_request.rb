@@ -1,5 +1,6 @@
 require "ebay_request/version"
 require "ebay_request/config"
+require "ebay_request/finding"
 
 module EbayRequest
   class << self

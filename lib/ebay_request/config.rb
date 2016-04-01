@@ -6,9 +6,13 @@ class EbayRequest::Config
 
   attr_accessor :sandbox
   attr_accessor :version
+  attr_accessor :timeout
+
+  alias sandbox? sandbox
 
   def initialize
     @sandbox ||= true
     @version ||= 941
+    @timeout ||= 60
   end
 end
