@@ -1,36 +1,43 @@
 class EbayRequest::Base
-  def initialize(options)
+  def initialize(options = {})
     @options = options
+    @options[:timeout] ||= EbayRequest.config.timeout
   end
 
   attr_reader :options
 
+  def response(callname, payload)
+    EbayRequest.config.validate!
+    request(URI.parse(endpoint_with_sandbox), callname, payload)
+  end
+
   protected
 
   def endpoint
-    raise NotImplementedError, "Implement #{class.name}#endpoint"
+    raise NotImplementedError, "Implement #{self.class.name}#endpoint"
   end
 
   def ns
     "urn:ebay:apis:eBLBaseComponents"
   end
 
-  def headers(callname)
-    {
-      "Content-Type" => "text/xml"
-    }
+  def headers(_)
+    {}
+  end
+
+  def payload(_, _)
+    {}
   end
 
   private
 
   def endpoint_with_sandbox
-    endpoint % ".sandbox" if config.sandbox?
+    endpoint % { sandbox: EbayRequest.config.sandbox? ? ".sandbox" : "" }
   end
 
-  def request(url, callname, input)
+  def request(url, callname, request)
     h = headers(callname)
-    b = body(callname, input)
-
+    b = payload(callname, request).to_json
     http = prepare(url)
 
     post = Net::HTTP::Post.new(url.path, h)
@@ -38,14 +45,14 @@ class EbayRequest::Base
 
     response = http.start { |r| r.request(post) }.body
 
-    log(url, h, b, response) if @logger
+    EbayRequest.log(url, h, b, response)
 
-    MultiXml.parse(response)
+    JSON.parse(response)
   end
 
   def prepare(url)
     Net::HTTP.new(url.host, url.port).tap do |http|
-      http.read_timeout = @timeout
+      http.read_timeout = options[:timeout]
 
       if url.port == 443
         http.use_ssl = true

@@ -1,11 +1,20 @@
 class EbayRequest::Finding < EbayRequest::Base
-  def initialize(_)
+  def initialize(options = {})
     super
 
     options[:globalid] ||= "EBAY-US"
   end
 
   private
+
+  def payload(callname, request)
+    {
+      "jsonns.xsi" => "http://www.w3.org/2001/XMLSchema-instance",
+      "jsonns.xs" => "http://www.w3.org/2001/XMLSchema",
+      "jsonns.tns" => "http://www.ebay.com/marketplace/search/v1/services",
+      "tns.#{callname}Request" => request
+    }
+  end
 
   def endpoint
     "http://svcs%{sandbox}.ebay.com/services/search/FindingService/v1"

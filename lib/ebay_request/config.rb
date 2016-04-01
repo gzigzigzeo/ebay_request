@@ -15,4 +15,10 @@ class EbayRequest::Config
     @version ||= 941
     @timeout ||= 60
   end
+
+  def validate!
+    %w(appid certid devid runame).each do |attr|
+      raise "Set EbayRequest.config.#{attr}" if public_send(attr).blank?
+    end
+  end
 end
