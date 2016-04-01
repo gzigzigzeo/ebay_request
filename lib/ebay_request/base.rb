@@ -21,11 +21,11 @@ class EbayRequest::Base
     "urn:ebay:apis:eBLBaseComponents"
   end
 
-  def headers(_)
+  def headers(_callname)
     {}
   end
 
-  def payload(_, _)
+  def payload(_callname, _request)
     {}
   end
 
