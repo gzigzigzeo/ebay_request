@@ -20,10 +20,6 @@ class EbayRequest::Finding < EbayRequest::Base
     "http://svcs%{sandbox}.ebay.com/services/search/FindingService/v1"
   end
 
-  def ns
-    "http://www.ebay.com/marketplace/search/v1/services"
-  end
-
   def headers(callname)
     super.merge(
       "X-EBAY-SOA-SERVICE-NAME" => "FindingService",
@@ -33,5 +29,9 @@ class EbayRequest::Finding < EbayRequest::Base
       "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "JSON",
       "X-EBAY-SOA-GLOBAL-ID" => options[:globalid].to_s
     )
+  end
+
+  def parse(response)
+    JSON.parse(response)
   end
 end

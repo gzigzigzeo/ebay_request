@@ -29,6 +29,10 @@ class EbayRequest::Base
     {}
   end
 
+  def parse(_response)
+    raise NotImplementedError, "Define #parse for API #{self.class.name}"
+  end
+
   private
 
   def endpoint_with_sandbox
@@ -44,10 +48,8 @@ class EbayRequest::Base
     post.body = b
 
     response = http.start { |r| r.request(post) }.body
-
     EbayRequest.log(url, h, b, response)
-
-    JSON.parse(response)
+    parse(response)
   end
 
   def prepare(url)

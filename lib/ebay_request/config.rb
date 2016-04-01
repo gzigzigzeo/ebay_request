@@ -18,7 +18,8 @@ class EbayRequest::Config
 
   def validate!
     %w(appid certid devid runame).each do |attr|
-      raise "Set EbayRequest.config.#{attr}" if public_send(attr).blank?
+      value = public_send(attr)
+      raise "Set EbayRequest.config.#{attr}" if value.nil? || value.empty?
     end
   end
 end
