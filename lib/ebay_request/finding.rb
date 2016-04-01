@@ -34,4 +34,17 @@ class EbayRequest::Finding < EbayRequest::Base
   def parse(response)
     JSON.parse(response)
   end
+
+  def process(response, callname)
+    response["#{callname}Response"].tap do |r|
+      raise EbayRequest::Error if r.nil?
+
+      if r.first["ack"] != "Success"
+        raise(
+          EbayRequest::Error,
+          r.first["errorMessage"].first["error"].first["message"].first
+        )
+      end
+    end
+  end
 end

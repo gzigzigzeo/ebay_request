@@ -2,6 +2,7 @@ require "ebay_request/version"
 require "ebay_request/config"
 require "ebay_request/base"
 require "ebay_request/finding"
+require "ebay_request/error"
 require "net/http"
 require "json"
 
@@ -18,7 +19,7 @@ module EbayRequest
     end
 
     def log(url, headers, body, response)
-      return if logger.blank?
+      return if logger.nil?
 
       logger.info "[EbayRequest] | Url      | #{url}"
       logger.info "[EbayRequest] | Headers  | #{headers}"
