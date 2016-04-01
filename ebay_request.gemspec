@@ -9,14 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Victor Sokolov"]
   spec.email         = ["gzigzigzeo@evilmartians.com"]
 
-  spec.summary       = "An interface to simplify queries to eBay API"
-  #spec.description   = "TODO: Write a longer description or delete this line."
+  spec.summary       = "eBay API request interface"
+  # spec.description   = "TODO: Write a longer description or delete this line."
   spec.homepage      = "https://github.com/gzigzigzeo/ebay_request"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
