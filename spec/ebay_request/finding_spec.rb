@@ -51,5 +51,11 @@ describe EbayRequest::Finding do
         EbayRequest::Error, /Keywords value required/
       )
     end
+
+    it "success" do
+      expect(subject.response("findItemsByKeywords", keywords: "iPad")).to(
+      
+      )
+    end
   end
 end
