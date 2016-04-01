@@ -15,18 +15,19 @@ describe EbayRequest::Finding do
   end
 
   let(:failing_request) do
-    "{\"jsonns.xsi\":\"http://www.w3.org/2001/XMLSchema-instance\",\
-\"jsonns.xs\":\"http://www.w3.org/2001/XMLSchema\",\"jsonns.tns\"\
-:\"http://www.ebay.com/marketplace/search/v1/services\",\
-\"tns.findItemsByKeywordsRequest\":{}}"
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?><findItemsByKeywordsRequest\
+    xmlns=\"http://www.ebay.com/marketplace/search/v1/services\">\
+    </findItemsByKeywordsRequest>"
   end
 
   let(:failing_response) do
-    "{\"findItemsByKeywordsResponse\":[{\"ack\":[\"Failure\"],\
-\"errorMessage\":[{\"error\":[{\"errorId\":[\"2\"],\"domain\":\
-[\"Marketplace\"],\"severity\":[\"Error\"],\"category\":[\"Request\"],\
-\"message\":[\"Keywords value required.\"],\"subdomain\":[\"Search\"]}]}]\
-,\"version\":[\"1.13.0\"],\"timestamp\":[\"2016-04-01T16:22:50.643Z\"]}]}"
+    %(<?xml version='1.0' encoding='UTF-8'?><findItemsByKeywordsResponse \
+xmlns="http://www.ebay.com/marketplace/search/v1/services">\
+<ack>Failure</ack><errorMessage><error><errorId>2</errorId>
+<domain>Marketplace</domain><severity>Error</severity>
+<category>Request</category><message>Keywords value required.</message>
+<subdomain>Search</subdomain></error></errorMessage><version>1.13.0</version>
+<timestamp>2016-04-01T17:39:51.046Z</timestamp></findItemsByKeywordsResponse>)
   end
 
   it "#response" do
@@ -38,7 +39,7 @@ describe EbayRequest::Finding do
         headers: {
           "X-Ebay-Soa-Global-Id" => "EBAY-US",
           "X-Ebay-Soa-Operation-Name" => "findItemsByKeywords",
-          "X-Ebay-Soa-Request-Data-Format" => "JSON",
+          "X-Ebay-Soa-Request-Data-Format" => "XML",
           "X-Ebay-Soa-Security-Appname" => "1",
           "X-Ebay-Soa-Service-Name" => "FindingService",
           "X-Ebay-Soa-Service-Version" => "1.0.0"

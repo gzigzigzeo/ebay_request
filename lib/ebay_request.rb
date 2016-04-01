@@ -4,7 +4,8 @@ require "ebay_request/base"
 require "ebay_request/finding"
 require "ebay_request/error"
 require "net/http"
-require "json"
+require "gyoku"
+require "multi_xml"
 
 module EbayRequest
   class << self

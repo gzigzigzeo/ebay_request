@@ -8,12 +8,11 @@ class EbayRequest::Finding < EbayRequest::Base
   private
 
   def payload(callname, request)
-    {
-      "jsonns.xsi" => "http://www.w3.org/2001/XMLSchema-instance",
-      "jsonns.xs" => "http://www.w3.org/2001/XMLSchema",
-      "jsonns.tns" => "http://www.ebay.com/marketplace/search/v1/services",
-      "tns.#{callname}Request" => request
-    }
+    request = Gyoku.xml(request)
+
+    %(<?xml version="1.0" encoding="utf-8"?><#{callname}Request\
+    xmlns="http://www.ebay.com/marketplace/search/v1/services">\
+    #{request}</#{callname}Request>)
   end
 
   def endpoint
@@ -26,26 +25,26 @@ class EbayRequest::Finding < EbayRequest::Base
       "X-EBAY-SOA-SERVICE-VERSION" => "1.0.0",
       "X-EBAY-SOA-SECURITY-APPNAME" => EbayRequest.config.appid,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
-      "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "JSON",
+      "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML",
       "X-EBAY-SOA-GLOBAL-ID" => options[:globalid].to_s
     )
   end
 
   def parse(response)
-    JSON.parse(response)
+    MultiXml.parse(response)
   end
 
   def process(response, callname)
     response["#{callname}Response"].tap do |r|
       raise EbayRequest::Error if r.nil?
 
-      if r.first["ack"] != ["Success"]
+      if r["ack"] != "Success"
         raise(EbayRequest::Error, error_message_for(r))
       end
     end
   end
 
   def error_message_for(r)
-    r.first["errorMessage"].first["error"].first["message"].first
+    r["errorMessage"]["error"]["message"]
   end
 end

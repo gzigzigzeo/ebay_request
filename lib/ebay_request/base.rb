@@ -45,7 +45,7 @@ class EbayRequest::Base
 
   def request(url, callname, request)
     h = headers(callname)
-    b = payload(callname, request).to_json
+    b = payload(callname, request)
     http = prepare(url)
 
     post = Net::HTTP::Post.new(url.path, h)
