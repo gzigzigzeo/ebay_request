@@ -39,12 +39,13 @@ class EbayRequest::Finding < EbayRequest::Base
     response["#{callname}Response"].tap do |r|
       raise EbayRequest::Error if r.nil?
 
-      if r.is_a?(Array) && r.first["ack"] != "Success"
-        raise(
-          EbayRequest::Error,
-          r.first["errorMessage"].first["error"].first["message"].first
-        )
+      if r.first["ack"] != ["Success"]
+        raise(EbayRequest::Error, error_message_for(r))
       end
     end
+  end
+
+  def error_message_for(r)
+    r.first["errorMessage"].first["error"].first["message"].first
   end
 end
