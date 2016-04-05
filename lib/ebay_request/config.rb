@@ -22,4 +22,16 @@ class EbayRequest::Config
       raise "Set EbayRequest.config.#{attr}" if value.nil? || value.empty?
     end
   end
+
+  def site_from_globalid(globalid)
+    sites[globalid.to_s.upcase]
+  end
+
+  private
+
+  def sites
+    @sites ||= YAML.load_file(
+      File.join(File.dirname(__FILE__), "../../config/sites.yml")
+    )
+  end
 end

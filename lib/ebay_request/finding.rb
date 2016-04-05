@@ -1,7 +1,8 @@
 class EbayRequest::Finding < EbayRequest::Base
+  include EbayRequest::Xml
+
   def initialize(options = {})
     super
-
     options[:globalid] ||= "EBAY-US"
   end
 
@@ -28,17 +29,6 @@ class EbayRequest::Finding < EbayRequest::Base
       "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML",
       "X-EBAY-SOA-GLOBAL-ID" => options[:globalid].to_s
     )
-  end
-
-  def parse(response)
-    MultiXml.parse(response)
-  end
-
-  def process(response, callname)
-    response["#{callname}Response"].tap do |r|
-      raise EbayRequest::Error if r.nil?
-      raise EbayRequest::Error, error_message_for(r) if r["ack"] != "Success"
-    end
   end
 
   def error_message_for(r)

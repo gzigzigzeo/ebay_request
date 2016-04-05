@@ -15,4 +15,10 @@ describe EbayRequest::Config do
       expect { subject.validate! }.to_not raise_error
     end
   end
+
+  context "#site_from_globalid" do
+    it "returns 915 for EBAY-RU" do
+      expect(subject.site_from_globalid("EBAY-RU")).to eq(915)
+    end
+  end
 end
