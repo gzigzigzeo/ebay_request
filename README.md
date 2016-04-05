@@ -37,6 +37,7 @@ end
 
 ```ruby
 EbayRequest::Finding.new.response("findItemsByKeywords", {"keywords" => "abc"})
+EbayRequest::Shopping.new.response("GetSingleItem", {"ItemID" => "252261544055"})
 ```
 
 ## Development
