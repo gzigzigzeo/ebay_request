@@ -37,10 +37,7 @@ class EbayRequest::Finding < EbayRequest::Base
   def process(response, callname)
     response["#{callname}Response"].tap do |r|
       raise EbayRequest::Error if r.nil?
-
-      if r["ack"] != "Success"
-        raise(EbayRequest::Error, error_message_for(r))
-      end
+      raise EbayRequest::Error, error_message_for(r) if r["ack"] != "Success"
     end
   end
 
