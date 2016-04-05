@@ -12,8 +12,8 @@ class EbayRequest::Finding < EbayRequest::Base
     request = Gyoku.xml(request)
 
     %(<?xml version="1.0" encoding="utf-8"?><#{callname}Request\
-    xmlns="http://www.ebay.com/marketplace/search/v1/services">\
-    #{request}</#{callname}Request>)
+xmlns="http://www.ebay.com/marketplace/search/v1/services">\
+#{request}</#{callname}Request>)
   end
 
   def endpoint

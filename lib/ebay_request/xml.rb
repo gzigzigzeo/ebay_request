@@ -1,6 +1,6 @@
 module EbayRequest::Xml
   private
-  
+
   def parse(response)
     MultiXml.parse(response)
   end

@@ -13,20 +13,20 @@ class EbayRequest::Shopping < EbayRequest::Base
     request = Gyoku.xml(request)
 
     %(<?xml version="1.0" encoding="utf-8"?><#{callname}Request\
-    xmlns="urn:ebay:apis:eBLBaseComponents">\
-    #{request}</#{callname}Request>)
+xmlns="urn:ebay:apis:eBLBaseComponents">#{request}</#{callname}Request>)
   end
 
   def endpoint
-    "http://open.api%{sandbox}.ebay.com/shopping"
+    "http://open.api%{sandbox}.ebay.com/shopping?"
   end
 
   def headers(callname)
     super.merge(
       "X-EBAY-API-APP-ID" => EbayRequest.config.appid,
-      "X-EBAY-API-VERSION" => EbayRequest.config.version,
+      "X-EBAY-API-VERSION" => EbayRequest.config.version.to_s,
+      "X-EBAY-API-CALL-NAME" => callname,
       "X-EBAY-API-REQUEST-ENCODING" => "XML",
-      "X-EBAY-API-SITE-ID" => options[:siteid]
+      "X-EBAY-API-SITE-ID" => options[:siteid].to_s
     )
   end
 
