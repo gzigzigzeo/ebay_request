@@ -8,7 +8,10 @@ module EbayRequest::Xml
   def process(response, callname)
     response["#{callname}Response"].tap do |r|
       raise EbayRequest::Error if r.nil?
-      raise EbayRequest::Error, error_message_for(r) if r["ack"] != "Success"
+
+      if r["ack"] != "Success" && r["Ack"] != "Success"
+        raise EbayRequest::Error, error_message_for(r)
+      end
     end
   end
 end

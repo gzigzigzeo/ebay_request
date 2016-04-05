@@ -16,7 +16,7 @@ describe EbayRequest::Finding do
 
   let(:failing_request) do
     "<?xml version=\"1.0\" encoding=\"utf-8\"?><findItemsByKeywordsRequest\
-xmlns=\"http://www.ebay.com/marketplace/search/v1/services\">\
+ xmlns=\"http://www.ebay.com/marketplace/search/v1/services\">\
 </findItemsByKeywordsRequest>"
   end
 
