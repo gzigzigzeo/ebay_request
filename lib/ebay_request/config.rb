@@ -27,8 +27,6 @@ class EbayRequest::Config
     sites[globalid.to_s.upcase]
   end
 
-  private
-
   def sites
     @sites ||= YAML.load_file(
       File.join(File.dirname(__FILE__), "../../config/sites.yml")
