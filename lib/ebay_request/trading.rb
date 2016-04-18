@@ -1,11 +1,6 @@
 class EbayRequest::Trading < EbayRequest::Base
   include EbayRequest::Xml
-
-  def initialize(options = {})
-    super
-    options[:siteid] ||=
-      EbayRequest.config.site_from_globalid(options[:globalid]) || 0
-  end
+  include EbayRequest::SiteId
 
   private
 

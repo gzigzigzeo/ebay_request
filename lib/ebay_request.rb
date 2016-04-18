@@ -1,6 +1,7 @@
 require "ebay_request/version"
 require "ebay_request/config"
 require "ebay_request/xml"
+require "ebay_request/site_id"
 require "ebay_request/base"
 require "ebay_request/finding"
 require "ebay_request/shopping"
