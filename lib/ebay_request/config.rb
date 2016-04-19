@@ -32,4 +32,8 @@ class EbayRequest::Config
       File.join(File.dirname(__FILE__), "../../config/sites.yml")
     )
   end
+
+  def mnemonic_sites
+    @mnemonic_sites ||= sites.invert
+  end
 end
