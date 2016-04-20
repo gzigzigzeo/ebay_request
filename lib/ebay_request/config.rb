@@ -24,24 +24,21 @@ class EbayRequest::Config
   end
 
   def site_id_from_globalid(globalid)
-    if site = sites_by_globalid[globalid.to_s.upcase]
-      site.id
-    end
+    (site = sites_by_globalid[globalid.to_s.upcase]) && site.id
   end
 
   def sites
     @sites ||= \
       YAML.load_file(
         File.join(File.dirname(__FILE__), "../../config/sites.yml")
-      )
-      .map { |h| EbayRequest::Site.new h }
+      ).map { |h| EbayRequest::Site.new h }
   end
 
   def sites_by_id
-    @sites_by_id ||= Hash[ sites.map { |s| [s.id, s] } ]
+    @sites_by_id ||= Hash[sites.map { |s| [s.id, s] }]
   end
 
   def sites_by_globalid
-    @sites_by_globalid ||= Hash[ sites.map { |s| [s.globalid, s] } ]
+    @sites_by_globalid ||= Hash[sites.map { |s| [s.globalid, s] }]
   end
 end
