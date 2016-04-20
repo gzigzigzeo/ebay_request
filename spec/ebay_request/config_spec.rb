@@ -16,9 +16,15 @@ describe EbayRequest::Config do
     end
   end
 
-  context "#site_from_globalid" do
+  context "#site_id_from_globalid" do
     it "returns 215 for EBAY-RU" do
-      expect(subject.site_from_globalid("EBAY-RU")).to eq(215)
+      expect(subject.site_id_from_globalid("EBAY-RU")).to eq(215)
+    end
+  end
+
+  context "#sites_by_id" do
+    it "returns EBAY-RU for 215" do
+      expect(subject.sites_by_id[215].globalid).to eq("EBAY-RU")
     end
   end
 end

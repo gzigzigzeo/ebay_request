@@ -23,17 +23,25 @@ class EbayRequest::Config
     end
   end
 
-  def site_from_globalid(globalid)
-    sites[globalid.to_s.upcase]
+  def site_id_from_globalid(globalid)
+    if site = sites_by_globalid[globalid.to_s.upcase]
+      site.id
+    end
   end
 
   def sites
-    @sites ||= YAML.load_file(
-      File.join(File.dirname(__FILE__), "../../config/sites.yml")
-    )
+    @sites ||= \
+      YAML.load_file(
+        File.join(File.dirname(__FILE__), "../../config/sites.yml")
+      )
+      .map { |h| EbayRequest::Site.new h }
   end
 
-  def mnemonic_sites
-    @mnemonic_sites ||= sites.invert
+  def sites_by_id
+    @sites_by_id ||= Hash[ sites.map { |s| [s.id, s] } ]
+  end
+
+  def sites_by_globalid
+    @sites_by_globalid ||= Hash[ sites.map { |s| [s.globalid, s] } ]
   end
 end

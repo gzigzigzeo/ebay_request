@@ -1,4 +1,5 @@
 require "ebay_request/version"
+require "ebay_request/site"
 require "ebay_request/config"
 require "ebay_request/xml"
 require "ebay_request/site_id"
