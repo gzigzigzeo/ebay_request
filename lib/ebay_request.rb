@@ -1,3 +1,8 @@
+require "omniauth"
+require "net/http"
+require "gyoku"
+require "multi_xml"
+
 require "ebay_request/version"
 require "ebay_request/site"
 require "ebay_request/config"
@@ -9,9 +14,8 @@ require "ebay_request/shopping"
 require "ebay_request/trading"
 require "ebay_request/auth"
 require "ebay_request/error"
-require "net/http"
-require "gyoku"
-require "multi_xml"
+
+require "omniauth/strategies/ebay"
 
 module EbayRequest
   class << self
