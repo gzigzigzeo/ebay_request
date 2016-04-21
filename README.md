@@ -58,6 +58,18 @@ end
 EbayRequest::Finding.new(env: :sandbox).response("findItemsByKeywords", keywords: "abc")
 ```
 
+## OmniAuth strategy
+
+If gem is configured use:
+
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :ebay
+end
+```
+
+To use strategy standalone specify options as for any other standard provider.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
