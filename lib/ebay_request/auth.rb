@@ -29,6 +29,6 @@ class EbayRequest::Auth < EbayRequest::Trading
   def signin_endpoint
     URI.parse(with_sandbox(
       "https://signin%{sandbox}.ebay.com/ws/eBayISAPI.dll"
-    )))
+    ))
   end
 end
