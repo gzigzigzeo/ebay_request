@@ -1,7 +1,7 @@
 module EbayRequest::SiteId
-  def initialize(options = {})
+  def initialize(config = :default, options = {})
     super
     options[:siteid] ||=
-      EbayRequest.config.site_id_from_globalid(options[:globalid]) || 0
+      EbayRequest::Config.site_id_from_globalid(options[:globalid]) || 0
   end
 end

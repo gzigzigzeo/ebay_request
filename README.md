@@ -40,6 +40,24 @@ EbayRequest::Finding.new.response("findItemsByKeywords", {"keywords" => "abc"})
 EbayRequest::Shopping.new.response("GetSingleItem", {"ItemID" => "252261544055"})
 ```
 
+## Using multiple key sets
+
+```ruby
+EbayRequest.configure do |config|
+  config.appid = secrets["appid"]
+  # And so on
+  # ...
+end
+
+EbayRequest.configure(:sandbox) do |config|
+  config.appid = secrets["appid"]
+  # ...
+  config.sandbox = true  
+end
+
+EbayRequest::Finding.new(:sandbox).response("findItemsByKeywords", {"keywords" => "abc"})
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

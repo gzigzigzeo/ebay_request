@@ -15,13 +15,15 @@ require "multi_xml"
 module EbayRequest
   class << self
     attr_accessor :logger
+    attr_accessor :config_repository
 
-    def config
-      @config ||= Config.new
+    def config(key = :default)
+      @config_repository ||= {}
+      @config_repository[key] ||= Config.new
     end
 
-    def configure
-      yield(config)
+    def configure(key = :default)
+      yield(config(key)) && config(key)
     end
 
     def log(url, headers, body, response)

@@ -1,10 +1,10 @@
 class EbayRequest::Base
-  def initialize(options = {})
+  def initialize(config = :default, options = {})
     @options = options
-    @options[:timeout] ||= EbayRequest.config.timeout
+    @config = EbayRequest.config(config)
   end
 
-  attr_reader :options
+  attr_reader :options, :config
 
   def response(callname, payload)
     EbayRequest.config.validate!
@@ -40,7 +40,7 @@ class EbayRequest::Base
   private
 
   def endpoint_with_sandbox
-    endpoint % { sandbox: EbayRequest.config.sandbox? ? ".sandbox" : "" }
+    endpoint % { sandbox: config.sandbox? ? ".sandbox" : "" }
   end
 
   def request(url, callname, request)
@@ -58,7 +58,7 @@ class EbayRequest::Base
 
   def prepare(url)
     Net::HTTP.new(url.host, url.port).tap do |http|
-      http.read_timeout = options[:timeout]
+      http.read_timeout = config.timeout
 
       if url.port == 443
         http.use_ssl = true

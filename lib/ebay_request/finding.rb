@@ -1,7 +1,7 @@
 class EbayRequest::Finding < EbayRequest::Base
   include EbayRequest::Xml
 
-  def initialize(options = {})
+  def initialize(config = :default, options = {})
     super
     options[:globalid] ||= "EBAY-US"
   end
@@ -24,7 +24,7 @@ class EbayRequest::Finding < EbayRequest::Base
     super.merge(
       "X-EBAY-SOA-SERVICE-NAME" => "FindingService",
       "X-EBAY-SOA-SERVICE-VERSION" => "1.0.0",
-      "X-EBAY-SOA-SECURITY-APPNAME" => EbayRequest.config.appid,
+      "X-EBAY-SOA-SECURITY-APPNAME" => config.appid,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
       "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML",
       "X-EBAY-SOA-GLOBAL-ID" => options[:globalid].to_s
