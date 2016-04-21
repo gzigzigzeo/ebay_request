@@ -27,6 +27,10 @@ module EbayRequest
       yield(config(key)) && config(key)
     end
 
+    def configured?
+      !@config_repository.nil?
+    end
+
     def log(url, headers, body, response)
       return if logger.nil?
 
