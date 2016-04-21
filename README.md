@@ -36,8 +36,8 @@ end
 ```
 
 ```ruby
-EbayRequest::Finding.new.response("findItemsByKeywords", {"keywords" => "abc"})
-EbayRequest::Shopping.new.response("GetSingleItem", {"ItemID" => "252261544055"})
+EbayRequest::Finding.new.response("findItemsByKeywords", keywords: "abc")
+EbayRequest::Shopping.new.response("GetSingleItem", ItemID: "252261544055")
 ```
 
 ## Using multiple key sets
@@ -55,7 +55,7 @@ EbayRequest.configure(:sandbox) do |config|
   config.sandbox = true  
 end
 
-EbayRequest::Finding.new(env: :sandbox).response("findItemsByKeywords", {"keywords" => "abc"})
+EbayRequest::Finding.new(env: :sandbox).response("findItemsByKeywords", keywords: "abc")
 ```
 
 ## Development
