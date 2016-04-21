@@ -28,6 +28,10 @@ class EbayRequest::Config
       (site = sites_by_globalid[globalid.to_s.upcase]) && site.id
     end
 
+    def site_id_from_name(name)
+      (site = sites_by_name[name]) && site.id
+    end
+
     def sites
       @sites ||=
         YAML.load_file(
@@ -41,6 +45,10 @@ class EbayRequest::Config
 
     def sites_by_globalid
       @sites_by_globalid ||= Hash[sites.map { |s| [s.globalid, s] }]
+    end
+
+    def sites_by_name
+      @sites_by_name ||= Hash[sites.map { |s| [s.name, s] }]
     end
   end
 end
