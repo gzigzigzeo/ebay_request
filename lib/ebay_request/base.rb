@@ -1,13 +1,13 @@
 class EbayRequest::Base
-  def initialize(config = :default, options = {})
+  def initialize(options = {})
     @options = options
-    @config = EbayRequest.config(config)
+    @config = EbayRequest.config(options[:env])
   end
 
   attr_reader :options, :config
 
   def response(callname, payload)
-    EbayRequest.config.validate!
+    config.validate!
     request(URI.parse(endpoint_with_sandbox), callname, payload)
   end
 

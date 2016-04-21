@@ -17,12 +17,12 @@ module EbayRequest
     attr_accessor :logger
     attr_accessor :config_repository
 
-    def config(key = :default)
+    def config(key = nil)
       @config_repository ||= {}
-      @config_repository[key] ||= Config.new
+      @config_repository[key || :default] ||= Config.new
     end
 
-    def configure(key = :default)
+    def configure(key = nil)
       yield(config(key)) && config(key)
     end
 

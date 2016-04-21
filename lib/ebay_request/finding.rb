@@ -1,7 +1,7 @@
 class EbayRequest::Finding < EbayRequest::Base
   include EbayRequest::Xml
 
-  def initialize(config = :default, options = {})
+  def initialize(options = {})
     super
     options[:globalid] ||= "EBAY-US"
   end

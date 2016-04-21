@@ -55,7 +55,7 @@ EbayRequest.configure(:sandbox) do |config|
   config.sandbox = true  
 end
 
-EbayRequest::Finding.new(:sandbox).response("findItemsByKeywords", {"keywords" => "abc"})
+EbayRequest::Finding.new(env: :sandbox).response("findItemsByKeywords", {"keywords" => "abc"})
 ```
 
 ## Development
