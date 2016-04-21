@@ -8,7 +8,7 @@ class EbayRequest::Base
 
   def response(callname, payload)
     config.validate!
-    request(URI.parse(endpoint_with_sandbox), callname, payload)
+    request(URI.parse(with_sandbox(endpoint)), callname, payload)
   end
 
   protected
@@ -37,11 +37,13 @@ class EbayRequest::Base
     raise NotImplementedError, "Define #process for API #{self.class.name}"
   end
 
-  private
+  protected
 
-  def endpoint_with_sandbox
-    endpoint % { sandbox: config.sandbox? ? ".sandbox" : "" }
+  def with_sandbox(value)
+    value % { sandbox: config.sandbox? ? ".sandbox" : "" }
   end
+
+  private
 
   def request(url, callname, request)
     h = headers(callname)
