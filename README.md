@@ -60,7 +60,7 @@ EbayRequest::Finding.new(env: :sandbox).response("findItemsByKeywords", keywords
 
 ## OmniAuth strategy
 
-If gem is configured use:
+If gem is configured somewhere at initializer (shown above):
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
@@ -68,7 +68,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 ```
 
-To use strategy standalone specify options as for any other standard provider.
+If you want to use just strategy you can pass all the required options as `#provider` args ([see source](https://github.com/gzigzigzeo/ebay_request/blob/master/lib/omniauth/strategies/ebay.rb#L4)]).
 
 ## Development
 
