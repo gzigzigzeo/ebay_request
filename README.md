@@ -68,7 +68,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 ```
 
-If you want to use just strategy you can pass all the required options as `#provider` args ([see source](https://github.com/gzigzigzeo/ebay_request/blob/master/lib/omniauth/strategies/ebay.rb#L4)]).
+If you want to use just strategy you can pass all the required options as `#provider` args ([see source](https://github.com/gzigzigzeo/ebay_request/blob/master/lib/omniauth/strategies/ebay.rb#L4)).
 
 ## Development
 
