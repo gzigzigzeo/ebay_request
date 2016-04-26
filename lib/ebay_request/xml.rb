@@ -9,7 +9,9 @@ module EbayRequest::Xml
     response["#{callname}Response"].tap do |r|
       raise EbayRequest::Error if r.nil?
 
-      if r["ack"] != "Success" && r["Ack"] != "Success"
+      ack = r["ack"] || r["Ack"]
+
+      unless ack == "Success" || (ack == "Warning" && options[:ignore_warnings])
         raise EbayRequest::Error, error_message_for(r)
       end
     end

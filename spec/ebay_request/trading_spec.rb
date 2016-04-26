@@ -31,16 +31,16 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 <Item><Title>i</Title></Item></AddItemRequest>)
   end
 
-  let(:failing_response_single_error) do
+  let(:warning_response_single_error) do
     %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
 <Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Warning</Ack><Errors>
 <LongMessage>This listing may be identical to test item</LongMessage>
 </Errors></AddItemResponse>)
   end
 
-  let(:failing_response_multiple_errors) do
+  let(:failure_response_multiple_errors) do
     %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
-<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Warning</Ack><Errors>
+<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Failure</Ack><Errors>
 <LongMessage>Error 1</LongMessage>
 </Errors><Errors>
 <LongMessage>This listing may be identical to test item</LongMessage>
@@ -55,7 +55,7 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
         body: failing_request,
         headers: headers
       )
-      .to_return(status: 200, body: failing_response_single_error)
+      .to_return(status: 200, body: warning_response_single_error)
 
     expect { subject.response("AddItem", Item: { Title: "i" }) }.to raise_error(
       EbayRequest::Error, "This listing may be identical to test item"
@@ -70,10 +70,27 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
         body: failing_request,
         headers: headers
       )
-      .to_return(status: 200, body: failing_response_multiple_errors)
+      .to_return(status: 200, body: failure_response_multiple_errors)
 
     expect { subject.response("AddItem", Item: { Title: "i" }) }.to raise_error(
       EbayRequest::Error, /Error 1, This listing may be identical to test item/
     )
+  end
+
+  context "when ignoring warnings" do
+    subject { described_class.new(ignore_warnings: true) }
+
+    it "#response with warning response" do
+      stub_request(
+        :post, "https://api.sandbox.ebay.com/ws/api.dll"
+      )
+        .with(
+          body: failing_request,
+          headers: headers
+        )
+        .to_return(status: 200, body: warning_response_single_error)
+
+      expect(subject.response("AddItem", Item: { Title: "i" })).to be
+    end
   end
 end
