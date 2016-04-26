@@ -2,66 +2,82 @@
 - globalid: EBAY-US
   id: 0
   name: US
+  currency: USD
 
 - globalid: EBAY-RU
   id: 215
   name: Russia
+  currency: RUB
 
 - globalid: EBAY-AT
   id: 16
   name: Austria
+  currency: EUR
 
 - globalid: EBAY-AU
   id: 15
   name: Australia
+  currency: AUD
 
 - globalid: EBAY-CH
   id: 193
   name: Switzerland
+  currency: CHF
 
 - globalid: EBAY-DE
   id: 77
   name: Germany
+  currency: EUR
 
 - globalid: EBAY-ENCA
   id: 2
   name: Canada
+  currency: CAD
 
 - globalid: EBAY-ES
   id: 186
   name: Spain
+  currency: EUR
 
 - globalid: EBAY-FR
   id: 71
   name: France
+  currency: EUR
 
 - globalid: EBAY-FRBE
   id: 23
   name: Belgium_French
+  currency: EUR
 
 - globalid: EBAY-FRCA
   id: 210
   name: CanadaFrench
+  currency: CAD
 
 - globalid: EBAY-GB
   id: 3
   name: UK
+  currency: GBP
 
 - globalid: EBAY-HK
   id: 201
   name: HongKong
+  currency: HKD
 
 - globalid: EBAY-IE
   id: 205
   name: Ireland
+  currency: EUR
 
 - globalid: EBAY-IN
   id: 203
   name: India
+  currency: INR
 
 - globalid: EBAY-IT
   id: 101
   name: Italy
+  currency: EUR
 
 - globalid: EBAY-MOTOR
   id: 100
@@ -69,23 +85,29 @@
 - globalid: EBAY-MY
   id: 207
   name: Malaysia
+  currency: MYR
 
 - globalid: EBAY-NL
   id: 146
   name: Netherlands
+  currency: EUR
 
 - globalid: EBAY-NLBE
   id: 123
   name: Belgium_Dutch
+  currency: EUR
 
 - globalid: EBAY-PH
   id: 211
   name: Philippines
+  currency: PHP
 
 - globalid: EBAY-PL
   id: 212
   name: Poland
+  currency: PLN
 
 - globalid: EBAY-SG
   id: 216
   name: Singapore
+  currency: SGD
