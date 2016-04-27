@@ -36,5 +36,9 @@ describe EbayRequest::Config do
     it "returns currency for 215" do
       expect(described_class.sites_by_id[215].currency).to eq("RUB")
     end
+
+    it "returns language for 215" do
+      expect(described_class.sites_by_id[215].language).to eq("ru")
+    end
   end
 end

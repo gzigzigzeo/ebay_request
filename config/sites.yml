@@ -3,81 +3,97 @@
   id: 0
   name: US
   currency: USD
+  language: en
 
 - globalid: EBAY-RU
   id: 215
   name: Russia
   currency: RUB
+  language: ru
 
 - globalid: EBAY-AT
   id: 16
   name: Austria
   currency: EUR
+  language: de
 
 - globalid: EBAY-AU
   id: 15
   name: Australia
   currency: AUD
+  language: en
 
 - globalid: EBAY-CH
   id: 193
   name: Switzerland
   currency: CHF
+  language: de
 
 - globalid: EBAY-DE
   id: 77
   name: Germany
   currency: EUR
+  language: de
 
 - globalid: EBAY-ENCA
   id: 2
   name: Canada
   currency: CAD
+  language: en
 
 - globalid: EBAY-ES
   id: 186
   name: Spain
   currency: EUR
+  language: es
 
 - globalid: EBAY-FR
   id: 71
   name: France
   currency: EUR
+  language: fr
 
 - globalid: EBAY-FRBE
   id: 23
   name: Belgium_French
   currency: EUR
+  language: fr
 
 - globalid: EBAY-FRCA
   id: 210
   name: CanadaFrench
   currency: CAD
+  language: fr
 
 - globalid: EBAY-GB
   id: 3
   name: UK
   currency: GBP
+  language: en
 
 - globalid: EBAY-HK
   id: 201
   name: HongKong
   currency: HKD
+  language: zh
 
 - globalid: EBAY-IE
   id: 205
   name: Ireland
   currency: EUR
+  language: en
 
 - globalid: EBAY-IN
   id: 203
   name: India
   currency: INR
+  language: en
 
 - globalid: EBAY-IT
   id: 101
   name: Italy
   currency: EUR
+  language: it
 
 - globalid: EBAY-MOTOR
   id: 100
@@ -86,28 +102,34 @@
   id: 207
   name: Malaysia
   currency: MYR
+  language: en
 
 - globalid: EBAY-NL
   id: 146
   name: Netherlands
   currency: EUR
+  language: nl
 
 - globalid: EBAY-NLBE
   id: 123
   name: Belgium_Dutch
   currency: EUR
+  language: de
 
 - globalid: EBAY-PH
   id: 211
   name: Philippines
   currency: PHP
+  language: en
 
 - globalid: EBAY-PL
   id: 212
   name: Poland
   currency: PLN
+  language: pl
 
 - globalid: EBAY-SG
   id: 216
   name: Singapore
   currency: SGD
+  language: en
