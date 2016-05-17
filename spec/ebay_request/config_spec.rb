@@ -33,6 +33,10 @@ describe EbayRequest::Config do
       expect(described_class.sites_by_id[215].globalid).to eq("EBAY-RU")
     end
 
+    it "returns RU for 215" do
+      expect(described_class.sites_by_id[215].code).to eq("RU")
+    end
+
     it "returns currency for 215" do
       expect(described_class.sites_by_id[215].currency).to eq("RUB")
     end

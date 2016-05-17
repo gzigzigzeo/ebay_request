@@ -1,5 +1,5 @@
 class EbayRequest::Site
-  attr_reader :globalid, :id, :name, :currency, :language, :domain
+  attr_reader :globalid, :id, :name, :currency, :language, :domain, :code
 
   def initialize(hash)
     @globalid = hash["globalid"]
@@ -8,5 +8,6 @@ class EbayRequest::Site
     @currency = hash["currency"]
     @language = hash["language"]
     @domain   = hash["domain"]
+    @code     = globalid.gsub("EBAY-", "")
   end
 end
