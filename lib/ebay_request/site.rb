@@ -1,14 +1,15 @@
 class EbayRequest::Site
-  attr_reader :globalid, :id, :name, :currency, :language, :domain
-  attr_reader :code, :metric
+  KEYS = %w(
+    globalid id name currency language domain code metric country
+  ).freeze
+
+  attr_reader(*KEYS)
 
   def initialize(hash)
     @hash = hash
     @hash["code"] = @hash["globalid"].gsub("EBAY-", "")
 
-    %w(globalid id name currency language domain metric code).each do |key|
-      instance_variable_set(:"@#{key}", hash[key])
-    end
+    KEYS.each { |key| instance_variable_set(:"@#{key}", hash[key]) }
   end
 
   def to_hash
