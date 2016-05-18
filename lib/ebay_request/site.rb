@@ -4,12 +4,11 @@ class EbayRequest::Site
 
   def initialize(hash)
     @hash = hash
+    @hash["code"] = @hash["globalid"].gsub("EBAY-", "")
 
-    %w(globalid id name currency language domain metric).each do |key|
+    %w(globalid id name currency language domain metric code).each do |key|
       instance_variable_set(:"@#{key}", hash[key])
     end
-
-    @code = globalid.gsub("EBAY-", "")
   end
 
   def to_hash
