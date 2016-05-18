@@ -5,6 +5,7 @@
   currency: USD
   language: en
   domain: ebay.com
+  metric: imperial
 
 - globalid: EBAY-RU
   id: 215
@@ -12,6 +13,7 @@
   currency: RUB
   language: ru
   domain: ebay.ru
+  metric: metric
 
 - globalid: EBAY-AT
   id: 16
@@ -19,6 +21,7 @@
   currency: EUR
   language: de
   domain: ebay.at
+  metric: metric
 
 - globalid: EBAY-AU
   id: 15
@@ -26,6 +29,7 @@
   currency: AUD
   language: en
   domain: ebay.com.au
+  metric: metric
 
 - globalid: EBAY-CH
   id: 193
@@ -33,6 +37,7 @@
   currency: CHF
   language: de
   domain: ebay.ch
+  metric: metric
 
 - globalid: EBAY-DE
   id: 77
@@ -40,6 +45,7 @@
   currency: EUR
   language: de
   domain: ebay.de
+  metric: metric
 
 - globalid: EBAY-ENCA
   id: 2
@@ -47,6 +53,7 @@
   currency: CAD
   language: en
   domain: ebay.ca
+  metric: metric
 
 - globalid: EBAY-ES
   id: 186
@@ -54,6 +61,7 @@
   currency: EUR
   language: es
   domain: ebay.es
+  metric: metric
 
 - globalid: EBAY-FR
   id: 71
@@ -61,6 +69,7 @@
   currency: EUR
   language: fr
   domain: ebay.fr
+  metric: metric
 
 - globalid: EBAY-FRBE
   id: 23
@@ -68,6 +77,7 @@
   currency: EUR
   language: fr
   domain: ebay.be
+  metric: metric
 
 - globalid: EBAY-FRCA
   id: 210
@@ -75,6 +85,7 @@
   currency: CAD
   language: fr
   domain: ebay.ca
+  metric: metric
 
 - globalid: EBAY-GB
   id: 3
@@ -82,6 +93,7 @@
   currency: GBP
   language: en
   domain: ebay.co.uk
+  metric: metric
 
 - globalid: EBAY-HK
   id: 201
@@ -89,6 +101,7 @@
   currency: HKD
   language: zh
   domain: ebay.com.hk
+  metric: metric
 
 - globalid: EBAY-IE
   id: 205
@@ -96,6 +109,7 @@
   currency: EUR
   language: en
   domain: ebay.ie
+  metric: metric
 
 - globalid: EBAY-IN
   id: 203
@@ -103,6 +117,7 @@
   currency: INR
   language: en
   domain: ebay.in
+  metric: metric
 
 - globalid: EBAY-IT
   id: 101
@@ -110,6 +125,7 @@
   currency: EUR
   language: it
   domain: ebay.it
+  metric: metric
 
 - globalid: EBAY-MOTOR
   id: 100
@@ -120,6 +136,7 @@
   currency: MYR
   language: en
   domain: ebay.com.my
+  metric: metric
 
 - globalid: EBAY-NL
   id: 146
@@ -127,6 +144,7 @@
   currency: EUR
   language: nl
   domain: ebay.nl
+  metric: metric
 
 - globalid: EBAY-NLBE
   id: 123
@@ -134,6 +152,7 @@
   currency: EUR
   language: de
   domain: ebay.nl
+  metric: metric
 
 - globalid: EBAY-PH
   id: 211
@@ -141,6 +160,7 @@
   currency: PHP
   language: en
   domain: ebay.ph
+  metric: metric
 
 - globalid: EBAY-PL
   id: 212
@@ -148,6 +168,7 @@
   currency: PLN
   language: pl
   domain: ebay.pl
+  metric: metric
 
 - globalid: EBAY-SG
   id: 216
@@ -155,3 +176,4 @@
   currency: SGD
   language: en
   domain: ebay.com.sg
+  metric: metric
