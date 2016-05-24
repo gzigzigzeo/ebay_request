@@ -1,8 +1,9 @@
 class EbayRequest::Error < StandardError
-  def initialize(msg = "EbayRequest error", response = "")
+  def initialize(msg = "EbayRequest error", response = "", codes = [])
     super(msg)
     @response = response
+    @codes = codes
   end
 
-  attr_reader :response
+  attr_reader :response, :codes
 end

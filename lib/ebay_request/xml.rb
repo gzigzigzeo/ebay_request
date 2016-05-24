@@ -12,8 +12,20 @@ module EbayRequest::Xml
       ack = r["ack"] || r["Ack"]
 
       unless ack == "Success" || (ack == "Warning" && options[:ignore_warnings])
-        raise EbayRequest::Error, error_message_for(r)
+        raise build_ebay_error(r)
       end
     end
+  end
+
+  def error_codes_for(_r)
+    []
+  end
+
+  def build_ebay_error(r)
+    EbayRequest::Error.new(
+      error_message_for(r),
+      r,
+      error_codes_for(r)
+    )
   end
 end
