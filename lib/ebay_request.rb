@@ -12,6 +12,7 @@ require "ebay_request/base"
 require "ebay_request/finding"
 require "ebay_request/shopping"
 require "ebay_request/trading"
+require "ebay_request/business_policies"
 require "ebay_request/auth"
 require "ebay_request/error"
 
