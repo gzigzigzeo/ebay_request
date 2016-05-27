@@ -15,4 +15,5 @@ class EbayRequest::Site
   def to_hash
     @hash
   end
+  alias to_h to_hash
 end
