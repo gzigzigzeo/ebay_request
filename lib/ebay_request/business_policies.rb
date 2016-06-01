@@ -30,14 +30,10 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
     )
   end
 
-  def error_message_for(r)
-    Array.wrap(r.dig("errorMessage", "error"))
-         .map { |e| e["message"] }
-         .join(", ")
-  end
-
-  def error_codes_for(r)
-    Array.wrap(r.dig("errorMessage", "error"))
-         .map { |e| e["errorId"].to_i }
+  def errors_for(r)
+    [r.dig("errorMessage", "error")]
+      .flatten
+      .compact
+      .map { |e| [e["severity"], e["errorId"], e["message"]] }
   end
 end

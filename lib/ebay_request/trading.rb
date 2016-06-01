@@ -28,16 +28,10 @@ class EbayRequest::Trading < EbayRequest::Base
     )
   end
 
-  def error_message_for(r)
-    [[r["Errors"]]]
+  def errors_for(r)
+    [r["Errors"]]
       .flatten
-      .map { |e| e["LongMessage"] }
-      .join(", ")
-  end
-
-  def error_codes_for(r)
-    [[r["Errors"]]]
-      .flatten
-      .map { |e| e["ErrorCode"].to_i }
+      .compact
+      .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
   end
 end

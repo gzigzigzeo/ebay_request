@@ -15,6 +15,7 @@ require "ebay_request/trading"
 require "ebay_request/business_policies"
 require "ebay_request/auth"
 require "ebay_request/error"
+require "ebay_request/response"
 
 require "omniauth/strategies/ebay"
 

@@ -6,26 +6,35 @@ module EbayRequest::Xml
   end
 
   def process(response, callname)
-    response["#{callname}Response"].tap do |r|
-      raise EbayRequest::Error if r.nil?
+    r = response["#{callname}Response"]
 
-      ack = r["ack"] || r["Ack"]
+    raise EbayRequest::Error, "No response" if r.nil?
 
-      unless ack == "Success" || (ack == "Warning" && options[:ignore_warnings])
-        raise build_ebay_error(r)
+    ack = r["ack"] || r["Ack"]
+    success = %w(Success Warning).include? ack
+
+    errors, warnings = split_errors_and_warnings(errors_for(r))
+
+    EbayRequest::Response.new(r, success, errors, warnings)
+  end
+
+  def split_errors_and_warnings(errs)
+    errors = []
+    warnings = []
+
+    errs.each do |severity, code, message|
+      if severity == "Warning"
+        warnings << [code.to_i, message]
+      else
+        errors << [code.to_i, message]
       end
     end
+
+    [errors, warnings]
   end
 
-  def error_codes_for(_r)
-    []
-  end
-
-  def build_ebay_error(r)
-    EbayRequest::Error.new(
-      error_message_for(r),
-      r,
-      error_codes_for(r)
-    )
+  # Parse response error, return array of [severity, code, message]
+  def errors_for(_r)
+    raise NotImplementedError, "Implement #{self.class.name}#errors_for"
   end
 end

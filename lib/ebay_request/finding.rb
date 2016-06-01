@@ -31,7 +31,10 @@ class EbayRequest::Finding < EbayRequest::Base
     )
   end
 
-  def error_message_for(r)
-    r["errorMessage"]["error"]["message"]
+  def errors_for(r)
+    [r.dig("errorMessage", "error")]
+      .flatten
+      .compact
+      .map { |e| [e["severity"], e["errorId"], e["message"]] }
   end
 end

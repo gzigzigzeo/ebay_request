@@ -39,6 +39,16 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 <ack>Success</ack></getSellerProfilesResponse>)
   end
 
+  let(:response_with_errors) do
+    %(<?xml version='1.0' encoding='UTF-8'?><getSellerProfilesResponse \
+xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
+<ack>Failure</ack><errorMessage><error><severity>Error</severity>\
+<message>Some error</message><errorId>123</errorId></error>\
+<error><severity>Warning</severity>\
+<message>Some warning</message><errorId>11</errorId></error>
+</errorMessage></getSellerProfilesResponse>)
+  end
+
   subject { described_class.new(siteid: "SITEID", token: "some_token") }
 
   it "sends request and parses response" do
@@ -51,6 +61,23 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
       )
       .to_return(status: 200, body: successful_response)
 
-    expect(subject.response("getSellerProfiles", {})).to be
+    expect(subject.response("getSellerProfiles", {})).to be_success
+  end
+
+  it "sends request and parses response with errors" do
+    stub_request(
+      :post, "https://svcs.sandbox.ebay.com/services/selling/v1/#{service_name}"
+    )
+      .with(
+        body: request,
+        headers: headers
+      )
+      .to_return(status: 200, body: response_with_errors)
+
+    response = subject.response("getSellerProfiles", {})
+
+    expect(response).not_to be_success
+    expect(response.errors).to eq [[123, "Some error"]]
+    expect(response.warnings).to eq [[11, "Some warning"]]
   end
 end

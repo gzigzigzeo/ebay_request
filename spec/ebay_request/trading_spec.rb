@@ -31,20 +31,58 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 <Item><Title>i</Title></Item></AddItemRequest>)
   end
 
-  let(:warning_response_single_error) do
+  let(:successful_response) do
     %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
-<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Warning</Ack><Errors>
+<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Success</Ack>
+</AddItemResponse>)
+  end
+
+  let(:response_with_error) do
+    %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
+<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Failure</Ack><Errors>
+<SeverityCode>Error</SeverityCode><ErrorCode>123</ErrorCode>
 <LongMessage>This listing may be identical to test item</LongMessage>
 </Errors></AddItemResponse>)
   end
 
-  let(:failure_response_multiple_errors) do
+  let(:response_with_warning) do
+    %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
+<Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Warning</Ack><Errors>
+<SeverityCode>Warning</SeverityCode><ErrorCode>42</ErrorCode>
+<LongMessage>Some warning</LongMessage>
+</Errors></AddItemResponse>)
+  end
+
+  let(:response_with_multiple_errors) do
     %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
 <Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Failure</Ack><Errors>
-<LongMessage>Error 1</LongMessage>
-</Errors><Errors>
+<SeverityCode>Error</SeverityCode><ErrorCode>11</ErrorCode>
+<LongMessage>Error 1</LongMessage></Errors><Errors>
+<SeverityCode>Error</SeverityCode><ErrorCode>123</ErrorCode>
 <LongMessage>This listing may be identical to test item</LongMessage>
+</Errors><Errors>
+<SeverityCode>Warning</SeverityCode><ErrorCode>57</ErrorCode>
+<LongMessage>Some other warning</LongMessage>
 </Errors></AddItemResponse>)
+  end
+
+  it "#response with no errors or warnings" do
+    stub_request(
+      :post, "https://api.sandbox.ebay.com/ws/api.dll"
+    )
+      .with(
+        body: failing_request,
+        headers: headers
+      )
+      .to_return(status: 200, body: successful_response)
+
+    response = subject.response("AddItem", Item: { Title: "i" })
+
+    expect(response).to be_success
+    expect(response.errors).to eq []
+    expect(response.warnings).to eq []
+
+    expect(response.data!).to be
   end
 
   it "#response with single error" do
@@ -55,11 +93,38 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
         body: failing_request,
         headers: headers
       )
-      .to_return(status: 200, body: warning_response_single_error)
+      .to_return(status: 200, body: response_with_error)
 
-    expect { subject.response("AddItem", Item: { Title: "i" }) }.to raise_error(
+    response = subject.response("AddItem", Item: { Title: "i" })
+
+    expect(response).not_to be_success
+    expect(response.errors).to eq [
+      [123, "This listing may be identical to test item"]
+    ]
+    expect(response.warnings).to eq []
+
+    expect { response.data! }.to raise_error(
       EbayRequest::Error, "This listing may be identical to test item"
     )
+  end
+
+  it "#response with single warning" do
+    stub_request(
+      :post, "https://api.sandbox.ebay.com/ws/api.dll"
+    )
+      .with(
+        body: failing_request,
+        headers: headers
+      )
+      .to_return(status: 200, body: response_with_warning)
+
+    response = subject.response("AddItem", Item: { Title: "i" })
+
+    expect(response).to be_success
+    expect(response.errors).to eq []
+    expect(response.warnings).to eq [[42, "Some warning"]]
+
+    expect(response.data!).to be
   end
 
   it "#response with multiple errors" do
@@ -70,27 +135,18 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
         body: failing_request,
         headers: headers
       )
-      .to_return(status: 200, body: failure_response_multiple_errors)
+      .to_return(status: 200, body: response_with_multiple_errors)
 
-    expect { subject.response("AddItem", Item: { Title: "i" }) }.to raise_error(
-      EbayRequest::Error, /Error 1, This listing may be identical to test item/
+    response = subject.response("AddItem", Item: { Title: "i" })
+
+    expect(response).not_to be_success
+    expect(response.errors).to eq [
+      [11, "Error 1"], [123, "This listing may be identical to test item"]
+    ]
+    expect(response.warnings).to eq [[57, "Some other warning"]]
+
+    expect { response.data! }.to raise_error(
+      EbayRequest::Error, "Error 1, This listing may be identical to test item"
     )
-  end
-
-  context "when ignoring warnings" do
-    subject { described_class.new(ignore_warnings: true) }
-
-    it "#response with warning response" do
-      stub_request(
-        :post, "https://api.sandbox.ebay.com/ws/api.dll"
-      )
-        .with(
-          body: failing_request,
-          headers: headers
-        )
-        .to_return(status: 200, body: warning_response_single_error)
-
-      expect(subject.response("AddItem", Item: { Title: "i" })).to be
-    end
   end
 end
