@@ -27,7 +27,10 @@ class EbayRequest::Shopping < EbayRequest::Base
     )
   end
 
-  def error_message_for(r)
-    r["Errors"]["LongMessage"]
+  def errors_for(r)
+    [r["Errors"]]
+      .flatten
+      .compact
+      .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
   end
 end
