@@ -55,7 +55,7 @@ class EbayRequest::Base
     post.body = b
 
     response, time = make_request(url, post)
-    EbayRequest.log(url, h, b, response, Time.now - time)
+    EbayRequest.log(url, h, b, response, time)
 
     process(parse(response), callname)
   end
