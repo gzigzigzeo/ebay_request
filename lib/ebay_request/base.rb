@@ -50,14 +50,21 @@ class EbayRequest::Base
   def request(url, callname, request)
     h = headers(callname)
     b = payload(callname, request)
-    http = prepare(url)
 
     post = Net::HTTP::Post.new(url.path, h)
     post.body = b
 
-    response = http.start { |r| r.request(post) }.body
-    EbayRequest.log(url, h, b, response)
+    response, time = make_request(url, post)
+    EbayRequest.log(url, h, b, response, Time.now - time)
+
     process(parse(response), callname)
+  end
+
+  def make_request(url, post)
+    start_time = Time.now
+    http = prepare(url)
+    response = http.start { |r| r.request(post) }.body
+    [response, Time.now - start_time]
   end
 
   def prepare(url)

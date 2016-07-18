@@ -37,13 +37,14 @@ module EbayRequest
       !@config_repository.nil?
     end
 
-    def log(url, headers, body, response)
+    def log(url, headers, body, response, time)
       return if logger.nil?
 
       logger.info "[EbayRequest] | Url      | #{url}"
       logger.info "[EbayRequest] | Headers  | #{headers}"
       logger.info "[EbayRequest] | Body     | #{body}"
       logger.info "[EbayRequest] | Response | #{response}"
+      logger.info "[EbayRequest] | Time     | #{time}"
     end
   end
 end
