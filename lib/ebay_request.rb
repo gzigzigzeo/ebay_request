@@ -44,7 +44,6 @@ module EbayRequest
       logger.info "[EbayRequest] | Headers  | #{headers}"
       logger.info "[EbayRequest] | Body     | #{body}"
       logger.info "[EbayRequest] | Response | #{response}"
-      logger.info "[EbayRequest] | Time     | #{time} (#{callname})"
     end
 
     def log_time(callname, time)
