@@ -63,6 +63,6 @@ class OmniAuth::Strategies::Ebay
   end
 
   def fetch_session_id
-    ebay.session_id
+    ebay.session_id["SessionID"]
   end
 end
