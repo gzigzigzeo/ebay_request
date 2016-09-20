@@ -43,13 +43,19 @@ module EbayRequest
       logger.info "[EbayRequest] | Url      | #{url}"
       logger.info "[EbayRequest] | Headers  | #{headers}"
       logger.info "[EbayRequest] | Body     | #{body}"
-      logger.info "[EbayRequest] | Response | #{response}"
+      logger.info "[EbayRequest] | Response | #{fix_utf(response)}"
     end
 
     def log_time(callname, time)
       return if logger.nil?
 
       logger.info "[EbayRequest] | Callname + Time | #{time} #{callname}"
+    end
+
+    def fix_utf(response)
+      response.encode(
+        "UTF-8", undef: :replace, invalid: :replace, replace: " "
+      )
     end
   end
 end
