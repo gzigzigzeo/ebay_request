@@ -33,6 +33,9 @@ EbayRequest.configure do |config|
   config.runame = secrets["runame"]
   config.sandbox = secrets["sandbox"]
 end
+
+EbayRequest.logger = Logger.new("ebay-request.log")
+EbayRequest.warn_logger = Logger.new("ebay-request-warn.log") # Primary log used otherwise
 ```
 
 ```ruby
