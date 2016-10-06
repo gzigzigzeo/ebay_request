@@ -15,7 +15,7 @@ module EbayRequest::Xml
 
     errors, warnings = split_errors_and_warnings(errors_for(r))
 
-    EbayRequest::Response.new(r, success, errors, warnings)
+    EbayRequest::Response.new(r, success, errors, warnings, callname)
   end
 
   def split_errors_and_warnings(errs)

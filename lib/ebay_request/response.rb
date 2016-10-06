@@ -1,11 +1,12 @@
 class EbayRequest::Response
   attr_reader :data, :errors, :warnings
 
-  def initialize(data, success, errors, warnings)
+  def initialize(data, success, errors, warnings, callname)
     @data = data
     @success = success
     @errors = errors
     @warnings = warnings
+    @callname = callname
   end
 
   def success?
@@ -17,6 +18,8 @@ class EbayRequest::Response
       raise EbayRequest::Error.new(error_message, self, error_codes)
     end
 
+    log_warnings
+
     data
   end
 
@@ -26,5 +29,9 @@ class EbayRequest::Response
 
   def error_codes
     errors.map { |e| e[0] }
+  end
+
+  def log_warnings
+    EbayRequest.log_warn(@callname, @warnings.inspect)
   end
 end

@@ -123,6 +123,7 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     expect(response).to be_success
     expect(response.errors).to eq []
     expect(response.warnings).to eq [[42, "Some warning"]]
+    expect(EbayRequest).to receive(:log_warn).and_return(true)
 
     expect(response.data!).to be
   end
@@ -144,6 +145,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
       [11, "Error 1"], [123, "This listing may be identical to test item"]
     ]
     expect(response.warnings).to eq [[57, "Some other warning"]]
+
+    expect(EbayRequest).to_not receive(:log_warn)
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error, "Error 1, This listing may be identical to test item"

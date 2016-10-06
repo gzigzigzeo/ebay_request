@@ -22,6 +22,7 @@ require "omniauth/strategies/ebay"
 module EbayRequest
   class << self
     attr_accessor :logger
+    attr_accessor :warn_logger
     attr_accessor :config_repository
 
     def config(key = nil)
@@ -48,8 +49,12 @@ module EbayRequest
 
     def log_time(callname, time)
       return if logger.nil?
-
       logger.info "[EbayRequest] | Callname + Time | #{time} #{callname}"
+    end
+
+    def log_warn(callname, message)
+      return if warn_logger.nil? && logger.nil?
+      (warn_logger || logger).warn "[EbayRequest] | #{callname} | #{message}"
     end
 
     def fix_utf(response)
