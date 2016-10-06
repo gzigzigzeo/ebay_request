@@ -50,7 +50,7 @@ xmlns="http://www.ebay.com/marketplace/search/v1/services">\
     response = subject.response("findItemsByKeywords", {})
 
     expect(response).not_to be_success
-    expect(response.errors).to eq [[2, "Keywords value required."]]
+    expect(response.errors).to eq [[2, "Keywords value required.", nil]]
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error, /Keywords value required/

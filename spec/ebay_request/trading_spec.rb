@@ -99,12 +99,17 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 
     expect(response).not_to be_success
     expect(response.errors).to eq [
-      [123, "This listing may be identical to test item"]
+      [
+        123,
+        "This listing may be identical to test item",
+        EbayRequest::Trading::IllegalItemStateError
+      ]
     ]
     expect(response.warnings).to eq []
 
     expect { response.data! }.to raise_error(
-      EbayRequest::Error, "This listing may be identical to test item"
+      EbayRequest::Trading::IllegalItemStateError,
+      "This listing may be identical to test item"
     )
   end
 
@@ -142,14 +147,20 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 
     expect(response).not_to be_success
     expect(response.errors).to eq [
-      [11, "Error 1"], [123, "This listing may be identical to test item"]
+      [11, "Error 1", EbayRequest::Trading::IllegalItemStateError],
+      [
+        123,
+        "This listing may be identical to test item",
+        EbayRequest::Trading::IllegalItemStateError
+      ]
     ]
     expect(response.warnings).to eq [[57, "Some other warning"]]
 
     expect(EbayRequest).to_not receive(:log_warn)
 
     expect { response.data! }.to raise_error(
-      EbayRequest::Error, "Error 1, This listing may be identical to test item"
+      EbayRequest::Trading::IllegalItemStateError,
+      "Error 1"
     )
   end
 end

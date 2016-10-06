@@ -26,7 +26,7 @@ module EbayRequest::Xml
       if severity == "Warning"
         warnings << [code.to_i, message]
       else
-        errors << [code.to_i, message]
+        errors << [code.to_i, message, error_class(code.to_i)]
       end
     end
 

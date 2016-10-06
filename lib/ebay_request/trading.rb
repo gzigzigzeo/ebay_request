@@ -2,6 +2,13 @@ class EbayRequest::Trading < EbayRequest::Base
   include EbayRequest::Xml
   include EbayRequest::SiteId
 
+  class IllegalItemStateError < EbayRequest::Error; end
+  class ItemLimitReachedError < EbayRequest::Error; end
+  class DailyItemCallLimitReachedError < EbayRequest::Error; end
+  class TokenValidationFailed < EbayRequest::Error; end
+  class AccountSuspended < EbayRequest::Error; end
+  class ApplicationInvalid < EbayRequest::Error; end
+
   private
 
   def payload(callname, request)
@@ -33,5 +40,16 @@ class EbayRequest::Trading < EbayRequest::Base
       .flatten
       .compact
       .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
+  end
+
+  def specific_error_classes
+    {
+      IllegalItemStateError => [291, 1047], # Revise or close closed listing
+      ItemLimitReachedError => [21_919_188],
+      DailyItemCallLimitReachedError => [21_919_165],
+      TokenValidationFailed => [931, 17_470, 16_110],
+      AccountSuspended => [841],
+      ApplicationInvalid => [127]
+    }
   end
 end

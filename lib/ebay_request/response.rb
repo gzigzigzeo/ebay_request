@@ -14,12 +14,8 @@ class EbayRequest::Response
   end
 
   def data!
-    unless success?
-      raise EbayRequest::Error.new(error_message, self, error_codes)
-    end
-
+    make_a_boom unless success?
     log_warnings
-
     data
   end
 
@@ -33,5 +29,11 @@ class EbayRequest::Response
 
   def log_warnings
     EbayRequest.log_warn(@callname, @warnings.inspect)
+  end
+
+  def make_a_boom
+    error = errors.find(&:last)
+    raise error.last.new(error[1], self, [error[0]]) if error
+    raise EbayRequest::Error.new(error_message, self, error_codes)
   end
 end

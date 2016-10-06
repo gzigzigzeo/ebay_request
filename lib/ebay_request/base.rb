@@ -45,7 +45,16 @@ class EbayRequest::Base
     value % { sandbox: config.sandbox? ? ".sandbox" : "" }
   end
 
+  def specific_error_classes
+    {}
+  end
+
   private
+
+  def error_class(code)
+    error = specific_error_classes.find { |_, v| v & [code] }
+    return error.first if error
+  end
 
   def request(url, callname, request)
     h = headers(callname)
