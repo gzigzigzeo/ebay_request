@@ -52,7 +52,7 @@ class EbayRequest::Base
   private
 
   def error_class(code)
-    error = specific_error_classes.find { |_, v| v & [code] }
+    error = specific_error_classes.find { |_, v| (v & [code]).any? }
     return error.first if error
   end
 
