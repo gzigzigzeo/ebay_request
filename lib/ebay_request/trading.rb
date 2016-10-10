@@ -42,6 +42,7 @@ class EbayRequest::Trading < EbayRequest::Base
       .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
   end
 
+  # http://developer.ebay.com/devzone/xml/docs/reference/ebay/errors/errormessages.htm
   def specific_error_classes
     {
       IllegalItemStateError => [291, 1047], # Revise or close closed listing
