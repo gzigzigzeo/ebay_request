@@ -32,7 +32,7 @@ class EbayRequest::Response
   end
 
   def make_a_boom
-    error = errors.find(&:last)
+    error = errors.find { |e| e[2] }
     raise error.last.new(error[1], self, [error[0]]) if error
     raise EbayRequest::Error.new(error_message, self, error_codes)
   end
