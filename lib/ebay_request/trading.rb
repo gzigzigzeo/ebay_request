@@ -8,6 +8,11 @@ class EbayRequest::Trading < EbayRequest::Xml
   class AccountSuspended < EbayRequest::Error; end
   class ApplicationInvalid < EbayRequest::Error; end
 
+  def initialize(options = {})
+    @token = options[:token]
+    super(options)
+  end
+
   private
 
   def payload(callname, request)
@@ -15,7 +20,14 @@ class EbayRequest::Trading < EbayRequest::Xml
 
     %(<?xml version="1.0" encoding="utf-8"?>\
 <#{callname}Request xmlns="urn:ebay:apis:eBLBaseComponents">\
-#{request}</#{callname}Request>)
+#{creds}#{request}</#{callname}Request>)
+  end
+
+  def creds
+    return if @token.nil?
+    %(<RequesterCredentials>\
+<eBayAuthToken>#{@token}</eBayAuthToken>\
+</RequesterCredentials>)
   end
 
   def endpoint

@@ -41,6 +41,7 @@ EbayRequest.warn_logger = Logger.new("ebay-request-warn.log") # Primary log used
 ```ruby
 EbayRequest::Finding.new.response("findItemsByKeywords", keywords: "abc")
 EbayRequest::Shopping.new.response("GetSingleItem", ItemID: "252261544055")
+EbayRequest::Shopping.new(token: "...").response("AddItem", ...some data...)
 ```
 
 ## Using multiple key sets
