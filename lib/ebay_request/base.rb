@@ -21,10 +21,6 @@ class EbayRequest::Base
     raise NotImplementedError, "Implement #{self.class.name}#endpoint"
   end
 
-  def ns
-    "urn:ebay:apis:eBLBaseComponents"
-  end
-
   def headers(_callname)
     {}
   end

@@ -1,4 +1,4 @@
-module EbayRequest::Xml
+class EbayRequest::Xml < EbayRequest::Base
   private
 
   def parse(response)

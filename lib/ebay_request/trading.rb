@@ -1,5 +1,4 @@
-class EbayRequest::Trading < EbayRequest::Base
-  include EbayRequest::Xml
+class EbayRequest::Trading < EbayRequest::Xml
   include EbayRequest::SiteId
 
   class IllegalItemStateError < EbayRequest::Error; end

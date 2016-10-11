@@ -1,5 +1,4 @@
-class EbayRequest::Shopping < EbayRequest::Base
-  include EbayRequest::Xml
+class EbayRequest::Shopping < EbayRequest::Xml
   include EbayRequest::SiteId
 
   private
