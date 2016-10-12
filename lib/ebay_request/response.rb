@@ -28,6 +28,7 @@ class EbayRequest::Response
   end
 
   def log_warnings
+    return if warnings.empty?
     EbayRequest.log_warn(@callname, @warnings.inspect)
   end
 
