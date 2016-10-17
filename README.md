@@ -35,7 +35,7 @@ EbayRequest.configure do |config|
 end
 
 EbayRequest.logger = Logger.new("ebay-request.log")
-EbayRequest.warn_logger = Logger.new("ebay-request-warn.log") # Primary log used otherwise
+EbayRequest.warn_logger = Logger.new("ebay-request-warn.log") # Not logged otherwise
 ```
 
 ```ruby

@@ -53,8 +53,8 @@ module EbayRequest
     end
 
     def log_warn(callname, message)
-      return if warn_logger.nil? && logger.nil?
-      (warn_logger || logger).warn "[EbayRequest] | #{callname} | #{message}"
+      return if warn_logger.nil?
+      warn_logger.warn "[EbayRequest] | #{callname} | #{message}"
     end
 
     def fix_utf(response)
