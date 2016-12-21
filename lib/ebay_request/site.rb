@@ -1,6 +1,7 @@
 class EbayRequest::Site
   KEYS = %w(
     globalid id name currency language domain code metric country
+    free_placement max_insertion_fee free_pictures subtitle_fee quantity_limits
   ).freeze
 
   attr_reader(*KEYS)

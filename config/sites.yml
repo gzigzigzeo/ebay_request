@@ -7,6 +7,11 @@
   domain: ebay.com
   metric: imperial
   country: US
+  shipping_zones: [US, Americas, NorthAmerica]
+  free_placement: 50
+  max_insertion_fee: 0.3
+  free_pictures: 12
+  subtitle_fee: 3.0
 
 - globalid: EBAY-RU
   id: 215
@@ -16,6 +21,7 @@
   domain: ebay.ru
   metric: metric
   country: RU
+  shipping_zones: [RU, Russia, RussianFederation]
 
 - globalid: EBAY-AT
   id: 16
@@ -34,6 +40,12 @@
   domain: ebay.com.au
   metric: metric
   country: AU
+  shipping_zones: [AU, Oceania]
+  free_placement: 0
+  max_insertion_fee: 3.5
+  free_pictures: 12
+  subtitle_fee: 2
+
 
 - globalid: EBAY-CH
   id: 193
@@ -52,6 +64,13 @@
   domain: ebay.de
   metric: metric
   country: DE
+  shipping_zones: [DE, Europe, EuropeanUnion]
+  free_placement: 50
+  max_insertion_fee: 0.35
+  free_pictures: 12
+  picture_fee: nil
+  subtitle_fee: 0.5
+  quantity_limits: 9
 
 - globalid: EBAY-ENCA
   id: 2
@@ -61,6 +80,12 @@
   domain: ebay.ca
   metric: metric
   country: CA
+  shipping_zones: [CA, Americas, NorthAmerica]
+  free_placement: 50
+  max_insertion_fee: 0.3
+  free_pictures: 12
+  subtitle_fee: 1.5
+  quantity_limits: 9
 
 - globalid: EBAY-ES
   id: 186
@@ -70,6 +95,11 @@
   domain: ebay.es
   metric: metric
   country: ES
+  shipping_zones: [ES, Europe, EuropeanUnion]
+  free_placement: 50
+  max_insertion_fee: 0.35
+  free_pictures: 12
+  subtitle_fee: 0.41
 
 - globalid: EBAY-FR
   id: 71
@@ -79,6 +109,12 @@
   domain: ebay.fr
   metric: metric
   country: FR
+  shipping_zones: [FR, Europe, EuropeanUnion]
+  free_placement: 50
+  max_insertion_fee: 0.35
+  free_pictures: 1
+  picture_fee: 0.13
+  subtitle_fee: 0.42
 
 - globalid: EBAY-FRBE
   id: 23
@@ -97,6 +133,12 @@
   domain: ebay.ca
   metric: metric
   country: CA
+  shipping_zones: [CA, Americas, NorthAmerica]
+  free_placement: 50
+  max_insertion_fee: 0.3
+  free_pictures: 12
+  subtitle_fee: 3.0
+  quantity_limits: 9
 
 - globalid: EBAY-GB
   id: 3
@@ -106,6 +148,11 @@
   domain: ebay.co.uk
   metric: metric
   country: UK
+  shipping_zones: [UK, Europe]
+  free_placement: 0
+  max_insertion_fee: 0.26
+  free_pictures: 12
+  subtitle_fee: 1
 
 - globalid: EBAY-HK
   id: 201
@@ -142,6 +189,12 @@
   domain: ebay.it
   metric: metric
   country: IT
+  shipping_zones: [IT, Europe, EuropeanUnion]
+  free_placement: 50
+  max_insertion_fee: 0.35
+  free_pictures: 1
+  picture_fee: 0.12
+  subtitle_fee: 0.41
 
 - globalid: EBAY-MOTOR
   id: 100

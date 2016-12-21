@@ -44,5 +44,9 @@ describe EbayRequest::Config do
     it "returns language for 215" do
       expect(described_class.sites_by_id[215].language).to eq("ru")
     end
+
+    it "returns language for 215" do
+      expect(described_class.sites_by_id[77].subtitle_fee).to eq(0.5)
+    end
   end
 end
