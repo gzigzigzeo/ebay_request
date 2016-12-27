@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "multi_xml"
   spec.add_dependency "gyoku"
   spec.add_dependency "omniauth"
+  spec.add_dependency "dry-initializer"
 end

@@ -1,10 +1,11 @@
 class EbayRequest::Base
-  def initialize(options = {})
-    @options = options
-    @config = EbayRequest.config(options[:env])
-  end
+  extend Dry::Initializer::Mixin
 
-  attr_reader :options, :config
+  param :options
+
+  def config
+    @config ||= EbayRequest.config(options[:env])
+  end
 
   def response(callname, payload)
     config.validate!
@@ -26,7 +27,7 @@ class EbayRequest::Base
   end
 
   def payload(_callname, _request)
-    {}
+    raise NotImplementedError, "Implement #{self.class.name}#payload"
   end
 
   def parse(response)

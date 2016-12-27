@@ -2,6 +2,7 @@ require "omniauth"
 require "net/http"
 require "gyoku"
 require "multi_xml"
+require "dry-initializer"
 
 require "ebay_request/version"
 require "ebay_request/site"
@@ -48,7 +49,7 @@ module EbayRequest
 
     def log_time(callname, time)
       return if logger.nil?
-      logger.info "[EbayRequest] | Callname + Time | #{time} #{callname}"
+      logger.info "[EbayRequest] | Time     | #{time} #{callname}"
     end
 
     def log_warn(callname, message)

@@ -1,13 +1,11 @@
 class EbayRequest::Response
-  attr_reader :data, :errors, :warnings
+  extend Dry::Initializer::Mixin
 
-  def initialize(data, success, errors, warnings, callname)
-    @data = data
-    @success = success
-    @errors = errors
-    @warnings = warnings
-    @callname = callname
-  end
+  param :data
+  param :success
+  param :errors
+  param :warnings
+  param :callname
 
   def success?
     @success
