@@ -1,4 +1,4 @@
-class EbayRequest::BusinessPolicies < EbayRequest::Xml
+class EbayRequest::BusinessPolicies < EbayRequest::Base
   include EbayRequest::SiteId
 
   private

@@ -15,7 +15,7 @@ class EbayRequest::Base
     response(callname, payload).data!
   end
 
-  protected
+  private
 
   def endpoint
     raise NotImplementedError, "Implement #{self.class.name}#endpoint"
@@ -29,12 +29,21 @@ class EbayRequest::Base
     {}
   end
 
-  def parse(_response)
-    raise NotImplementedError, "Define #parse for API #{self.class.name}"
+  def parse(response)
+    MultiXml.parse(response)
   end
 
-  def process(_response, _callname)
-    raise NotImplementedError, "Define #process for API #{self.class.name}"
+  def process(response, callname)
+    r = response["#{callname}Response"]
+
+    raise EbayRequest::Error, "No response" if r.nil?
+
+    ack = r["ack"] || r["Ack"]
+    success = %w(Success Warning).include? ack
+
+    errors, warnings = split_errors_and_warnings(errors_for(r))
+
+    EbayRequest::Response.new(r, success, errors, warnings, callname)
   end
 
   def with_sandbox(value)
@@ -45,7 +54,20 @@ class EbayRequest::Base
     {}
   end
 
-  private
+  def split_errors_and_warnings(errs)
+    errors = []
+    warnings = []
+
+    errs.each do |severity, code, message|
+      if severity == "Warning"
+        warnings << [code.to_i, message]
+      else
+        errors << [code.to_i, message, error_class(code.to_i)]
+      end
+    end
+
+    [errors, warnings]
+  end
 
   def error_class(code)
     error = specific_error_classes.find { |_, v| (v & [code]).any? }
@@ -82,5 +104,9 @@ class EbayRequest::Base
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
+  end
+
+  def errors_for(_r)
+    raise NotImplementedError, "Implement #{self.class.name}#errors_for"
   end
 end
