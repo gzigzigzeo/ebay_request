@@ -1,10 +1,19 @@
 class EbayRequest::Base
-  extend Dry::Initializer::Mixin
+  def initialize(options = {})
+    @options = options
+  end
 
-  param :options
+  attr_reader :options
 
   def config
     @config ||= EbayRequest.config(options[:env])
+  end
+
+  def siteid
+    @siteid ||=
+      options[:siteid] ||
+      EbayRequest::Config.site_id_from_globalid(options[:globalid]) ||
+      0
   end
 
   def response(callname, payload)
@@ -35,44 +44,16 @@ class EbayRequest::Base
   end
 
   def process(response, callname)
-    r = response["#{callname}Response"]
+    data = response["#{callname}Response"]
 
-    raise EbayRequest::Error, "No response" if r.nil?
-
-    ack = r["ack"] || r["Ack"]
-    success = %w(Success Warning).include? ack
-
-    errors, warnings = split_errors_and_warnings(errors_for(r))
-
-    EbayRequest::Response.new(r, success, errors, warnings, callname)
+    raise EbayRequest::Error, "#{callname} response is blank" if data.nil?
+    EbayRequest::Response.new(
+      callname, data, errors_for(data), self.class::FATAL_ERRORS
+    )
   end
 
   def with_sandbox(value)
     value % { sandbox: config.sandbox? ? ".sandbox" : "" }
-  end
-
-  def specific_error_classes
-    {}
-  end
-
-  def split_errors_and_warnings(errs)
-    errors = []
-    warnings = []
-
-    errs.each do |severity, code, message|
-      if severity == "Warning"
-        warnings << [code.to_i, message]
-      else
-        errors << [code.to_i, message, error_class(code.to_i)]
-      end
-    end
-
-    [errors, warnings]
-  end
-
-  def error_class(code)
-    error = specific_error_classes.find { |_, v| (v & [code]).any? }
-    return error.first if error
   end
 
   def request(url, callname, request)

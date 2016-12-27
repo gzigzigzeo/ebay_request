@@ -1,6 +1,4 @@
 class EbayRequest::BusinessPolicies < EbayRequest::Base
-  include EbayRequest::SiteId
-
   private
 
   SERVICE_NAME = "SellerProfilesManagementService".freeze
@@ -21,11 +19,11 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
   def headers(callname)
     super.merge(
       "Content-Type" => "text/xml",
-      "X-EBAY-SOA-SECURITY-TOKEN" => options[:token],
+      "X-EBAY-SOA-SECURITY-TOKEN" => options[:token].to_s,
       "X-EBAY-SOA-SERVICE-NAME" => SERVICE_NAME,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
       "X-EBAY-SOA-CONTENT-TYPE" => "XML",
-      "X-EBAY-SOA-GLOBAL-ID" => options[:siteid].to_s
+      "X-EBAY-SOA-GLOBAL-ID" => siteid.to_s
     )
   end
 
@@ -35,4 +33,6 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
       .compact
       .map { |e| [e["severity"], e["errorId"], e["message"]] }
   end
+
+  FATAL_ERRORS = {}.freeze
 end

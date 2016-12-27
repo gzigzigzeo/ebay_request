@@ -1,7 +1,6 @@
 class EbayRequest::Finding < EbayRequest::Base
-  def initialize(options = {})
-    super
-    options[:globalid] ||= "EBAY-US"
+  def globalid
+    options[:globalid] || "EBAY-US"
   end
 
   private
@@ -25,7 +24,7 @@ class EbayRequest::Finding < EbayRequest::Base
       "X-EBAY-SOA-SECURITY-APPNAME" => config.appid,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
       "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML",
-      "X-EBAY-SOA-GLOBAL-ID" => options[:globalid].to_s
+      "X-EBAY-SOA-GLOBAL-ID" => globalid.to_s
     )
   end
 
@@ -35,4 +34,6 @@ class EbayRequest::Finding < EbayRequest::Base
       .compact
       .map { |e| [e["severity"], e["errorId"], e["message"]] }
   end
+
+  FATAL_ERRORS = {}.freeze
 end

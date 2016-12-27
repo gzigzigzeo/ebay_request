@@ -87,8 +87,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).to be_success
-    expect(response.errors).to eq []
-    expect(response.warnings).to eq []
+    expect(response.errors).to eq({})
+    expect(response.warnings).to eq({})
 
     expect(response.data!).to be
   end
@@ -106,14 +106,10 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq [
-      [
-        123,
-        "This listing may be identical to test item",
-        nil
-      ]
-    ]
-    expect(response.warnings).to eq []
+    expect(response.errors).to eq(
+      123 => "This listing may be identical to test item"
+    )
+    expect(response.warnings).to eq({})
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error,
@@ -134,8 +130,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).to be_success
-    expect(response.errors).to eq []
-    expect(response.warnings).to eq [[42, "Some warning"]]
+    expect(response.errors).to eq({})
+    expect(response.warnings).to eq(42 => "Some warning")
     expect(EbayRequest).to receive(:log_warn).and_return(true)
 
     expect(response.data!).to be
@@ -154,15 +150,11 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq [
-      [11, "Error 1", nil],
-      [
-        123,
-        "This listing may be identical to test item",
-        nil
-      ]
-    ]
-    expect(response.warnings).to eq [[57, "Some other warning"]]
+    expect(response.errors).to eq(
+      11  => "Error 1",
+      123 => "This listing may be identical to test item"
+    )
+    expect(response.warnings).to eq(57 => "Some other warning")
 
     expect(EbayRequest).to_not receive(:log_warn)
 
@@ -185,13 +177,9 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq [
-      [
-        291,
-        "This listing may be identical to test item",
-        EbayRequest::Trading::IllegalItemStateError
-      ]
-    ]
+    expect(response.errors).to eq(
+      291 => "This listing may be identical to test item"
+    )
     expect(EbayRequest).to_not receive(:log_warn)
     expect { response.data! }.to raise_error(
       EbayRequest::Trading::IllegalItemStateError,

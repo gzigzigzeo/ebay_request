@@ -1,17 +1,10 @@
 class EbayRequest::Trading < EbayRequest::Base
-  include EbayRequest::SiteId
-
   class IllegalItemStateError < EbayRequest::Error; end
   class ItemLimitReachedError < EbayRequest::Error; end
   class DailyItemCallLimitReachedError < EbayRequest::Error; end
   class TokenValidationFailed < EbayRequest::Error; end
   class AccountSuspended < EbayRequest::Error; end
   class ApplicationInvalid < EbayRequest::Error; end
-
-  def initialize(options = {})
-    @token = options[:token]
-    super(options)
-  end
 
   private
 
@@ -24,9 +17,9 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def creds
-    return if @token.nil?
+    return if options[:token].nil?
     %(<RequesterCredentials>\
-<eBayAuthToken>#{@token}</eBayAuthToken>\
+<eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
   end
 
@@ -42,7 +35,7 @@ class EbayRequest::Trading < EbayRequest::Base
       "X-EBAY-API-CERT-NAME" => EbayRequest.config.certid,
       "X-EBAY-API-COMPATIBILITY-LEVEL" => EbayRequest.config.version.to_s,
       "X-EBAY-API-CALL-NAME" => callname,
-      "X-EBAY-API-SITEID" => options[:siteid].to_s
+      "X-EBAY-API-SITEID" => siteid.to_s
     )
   end
 
@@ -54,14 +47,15 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   # http://developer.ebay.com/devzone/xml/docs/reference/ebay/errors/errormessages.htm
-  def specific_error_classes
-    {
-      IllegalItemStateError => [291, 1047], # Revise or close closed listing
-      ItemLimitReachedError => [21_919_188],
-      DailyItemCallLimitReachedError => [21_919_165],
-      TokenValidationFailed => [931, 17_470, 16_110],
-      AccountSuspended => [841],
-      ApplicationInvalid => [127]
-    }
-  end
+  FATAL_ERRORS = {
+    291        => IllegalItemStateError,
+    1047       => IllegalItemStateError,
+    21_919_188 => ItemLimitReachedError,
+    21_919_165 => DailyItemCallLimitReachedError,
+    931        => TokenValidationFailed,
+    17_470     => TokenValidationFailed,
+    16_110     => TokenValidationFailed,
+    841        => AccountSuspended,
+    127        => ApplicationInvalid
+  }.freeze
 end

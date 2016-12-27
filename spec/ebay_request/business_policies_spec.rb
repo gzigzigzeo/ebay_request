@@ -77,7 +77,7 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
     response = subject.response("getSellerProfiles", {})
 
     expect(response).not_to be_success
-    expect(response.errors).to eq [[123, "Some error", nil]]
-    expect(response.warnings).to eq [[11, "Some warning"]]
+    expect(response.errors).to eq(123 => "Some error")
+    expect(response.warnings).to eq(11 => "Some warning")
   end
 end

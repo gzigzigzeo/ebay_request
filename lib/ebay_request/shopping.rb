@@ -1,6 +1,4 @@
 class EbayRequest::Shopping < EbayRequest::Base
-  include EbayRequest::SiteId
-
   private
 
   def payload(callname, request)
@@ -22,7 +20,7 @@ class EbayRequest::Shopping < EbayRequest::Base
       "X-EBAY-API-VERSION" => config.version.to_s,
       "X-EBAY-API-CALL-NAME" => callname,
       "X-EBAY-API-REQUEST-ENCODING" => "XML",
-      "X-EBAY-API-SITE-ID" => options[:siteid].to_s
+      "X-EBAY-API-SITE-ID" => siteid.to_s
     )
   end
 
@@ -32,4 +30,6 @@ class EbayRequest::Shopping < EbayRequest::Base
       .compact
       .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
   end
+
+  FATAL_ERRORS = {}.freeze
 end
