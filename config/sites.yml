@@ -12,6 +12,7 @@
   max_insertion_fee: 0.3
   free_pictures: 12
   subtitle_fee: 3.0
+  gtc_available: true
 
 - globalid: EBAY-RU
   id: 215
@@ -22,6 +23,7 @@
   metric: metric
   country: RU
   shipping_zones: [RU, Russia, RussianFederation]
+  gtc_available: true
 
 - globalid: EBAY-AT
   id: 16
@@ -45,7 +47,7 @@
   max_insertion_fee: 3.5
   free_pictures: 12
   subtitle_fee: 2
-
+  gtc_available: true
 
 - globalid: EBAY-CH
   id: 193
@@ -71,6 +73,7 @@
   picture_fee: nil
   subtitle_fee: 0.5
   quantity_limits: 9
+  gtc_available: true
 
 - globalid: EBAY-ENCA
   id: 2
@@ -86,6 +89,7 @@
   free_pictures: 12
   subtitle_fee: 1.5
   quantity_limits: 9
+  gtc_available: true
 
 - globalid: EBAY-ES
   id: 186
@@ -100,6 +104,7 @@
   max_insertion_fee: 0.35
   free_pictures: 12
   subtitle_fee: 0.41
+  gtc_available: false
 
 - globalid: EBAY-FR
   id: 71
@@ -115,6 +120,7 @@
   free_pictures: 1
   picture_fee: 0.13
   subtitle_fee: 0.42
+  gtc_available: false
 
 - globalid: EBAY-FRBE
   id: 23
@@ -139,6 +145,7 @@
   free_pictures: 12
   subtitle_fee: 3.0
   quantity_limits: 9
+  gtc_available: true
 
 - globalid: EBAY-GB
   id: 3
@@ -153,6 +160,7 @@
   max_insertion_fee: 0.26
   free_pictures: 12
   subtitle_fee: 1
+  gtc_available: true
 
 - globalid: EBAY-HK
   id: 201
@@ -195,6 +203,7 @@
   free_pictures: 1
   picture_fee: 0.12
   subtitle_fee: 0.41
+  gtc_available: false
 
 - globalid: EBAY-MOTOR
   id: 100
