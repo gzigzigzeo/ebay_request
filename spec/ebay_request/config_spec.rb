@@ -45,8 +45,21 @@ describe EbayRequest::Config do
       expect(described_class.sites_by_id[215].language).to eq("ru")
     end
 
-    it "returns language for 215" do
+    it "returns language for 77" do
       expect(described_class.sites_by_id[77].subtitle_fee).to eq(0.5)
+    end
+
+    it "returns gtc_available for 215" do
+      expect(described_class.sites_by_id[215]).to be_gtc_available
+    end
+
+    it "returns gtc_available for 71" do
+      expect(described_class.sites_by_id[71]).not_to be_gtc_available
+    end
+
+    it "raises when gtc availability asked for 207" do
+      expect { described_class.sites_by_id[207].gtc_available? }
+        .to raise_error(StandardError)
     end
   end
 end
