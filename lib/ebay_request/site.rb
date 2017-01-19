@@ -24,7 +24,7 @@ class EbayRequest::Site
     raise <<-MESSAGE.gsub(/^ +\|/, "")
       |We haven't checked whether GTC duration is available on the site #{@id}.
       |You should explore if GTC is supported by at least one of its categories (see https://developer.ebay.com/devzone/xml/docs/reference/ebay/GetCategoryFeatures.html)
-      |Then you're welcome to made a PR with a resulting value (true|false) added to `config/sites.yml`
+      |Then you're welcome to make a PR with a resulting value (true|false) added to `config/sites.yml`
     MESSAGE
   end
 end
