@@ -20,7 +20,7 @@ class EbayRequest::Finding < EbayRequest::Base
   def headers(callname)
     super.merge(
       "X-EBAY-SOA-SERVICE-NAME" => "FindingService",
-      "X-EBAY-SOA-SERVICE-VERSION" => "1.0.0",
+      "X-EBAY-SOA-SERVICE-VERSION" => "1.9.0",
       "X-EBAY-SOA-SECURITY-APPNAME" => config.appid,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
       "X-EBAY-SOA-REQUEST-DATA-FORMAT" => "XML",
