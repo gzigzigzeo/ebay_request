@@ -24,6 +24,10 @@ class EbayRequest::Config
   end
 
   class << self
+    def globalid_from_site_id(site_id)
+      (site = sites_by_id[site_id]) && site.globalid
+    end
+
     def site_id_from_globalid(globalid)
       (site = sites_by_globalid[globalid.to_s.upcase]) && site.id
     end

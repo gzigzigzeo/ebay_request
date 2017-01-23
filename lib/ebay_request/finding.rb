@@ -1,8 +1,4 @@
 class EbayRequest::Finding < EbayRequest::Base
-  def globalid
-    options[:globalid] || "EBAY-US"
-  end
-
   private
 
   def payload(callname, request)

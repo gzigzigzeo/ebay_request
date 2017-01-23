@@ -16,6 +16,13 @@ class EbayRequest::Base
       0
   end
 
+  def globalid
+    @globalid ||=
+      options[:globalid] ||
+      EbayRequest::Config.globalid_from_site_id(options[:siteid]) ||
+      "EBAY-US"
+  end
+
   def response(callname, payload)
     config.validate!
     request(URI.parse(with_sandbox(endpoint)), callname, payload)
