@@ -24,6 +24,11 @@
   country: RU
   shipping_zones: [RU, Russia, RussianFederation]
   gtc_available: true
+  free_placement: 1000000
+  max_insertion_fee: 0
+  free_pictures: 12
+  picture_fee: 0
+  subtitle_fee: 0
 
 - globalid: EBAY-AT
   id: 16
