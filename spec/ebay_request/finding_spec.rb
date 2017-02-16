@@ -33,18 +33,17 @@ xmlns="http://www.ebay.com/marketplace/search/v1/services">\
   it "#response" do
     stub_request(
       :post, "http://svcs.sandbox.ebay.com/services/search/FindingService/v1"
+    ).with(
+      body: failing_request,
+      headers: {
+        "X-Ebay-Soa-Global-Id" => "EBAY-US",
+        "X-Ebay-Soa-Operation-Name" => "findItemsByKeywords",
+        "X-Ebay-Soa-Request-Data-Format" => "XML",
+        "X-Ebay-Soa-Security-Appname" => "1",
+        "X-Ebay-Soa-Service-Name" => "FindingService",
+        "X-Ebay-Soa-Service-Version" => "1.9.0"
+      }
     )
-      .with(
-        body: failing_request,
-        headers: {
-          "X-Ebay-Soa-Global-Id" => "EBAY-US",
-          "X-Ebay-Soa-Operation-Name" => "findItemsByKeywords",
-          "X-Ebay-Soa-Request-Data-Format" => "XML",
-          "X-Ebay-Soa-Security-Appname" => "1",
-          "X-Ebay-Soa-Service-Name" => "FindingService",
-          "X-Ebay-Soa-Service-Version" => "1.0.0"
-        }
-      )
       .to_return(status: 200, body: failing_response)
 
     response = subject.response("findItemsByKeywords", {})

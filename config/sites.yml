@@ -19,7 +19,7 @@
   name: Russia
   currency: RUB
   language: ru
-  domain: ebay.ru
+  domain: ebay.com
   metric: metric
   country: RU
   shipping_zones: [RU, Russia, RussianFederation]
