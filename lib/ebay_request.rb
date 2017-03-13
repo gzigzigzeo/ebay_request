@@ -23,6 +23,7 @@ module EbayRequest
     attr_accessor :logger
     attr_accessor :warn_logger
     attr_accessor :config_repository
+    attr_accessor :json_logger
 
     def config(key = nil)
       @config_repository ||= {}
@@ -54,6 +55,11 @@ module EbayRequest
     def log_warn(callname, message)
       return if warn_logger.nil?
       warn_logger.warn "[EbayRequest] | #{callname} | #{message}"
+    end
+
+    def log_json(options)
+      return if json_logger.nil?
+      json_logger.log(options)
     end
 
     def fix_utf(response)

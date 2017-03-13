@@ -63,6 +63,7 @@ class EbayRequest::Base
     value % { sandbox: config.sandbox? ? ".sandbox" : "" }
   end
 
+  # rubocop:disable Metrics/MethodLength
   def request(url, callname, request)
     h = headers(callname)
     b = payload(callname, request)
@@ -71,11 +72,23 @@ class EbayRequest::Base
     post.body = b
 
     response, time = make_request(url, post)
+
     EbayRequest.log(url, h, b, response)
     EbayRequest.log_time(callname, time)
 
-    process(parse(response), callname)
+    process(parse(response), callname).tap do |response_object|
+      EbayRequest.log_json(
+        callname: callname,
+        url: url,
+        headers: h,
+        body: b,
+        response: response,
+        time: time,
+        warnings: response_object.warnings.inspect
+      )
+    end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def make_request(url, post)
     start_time = Time.now
