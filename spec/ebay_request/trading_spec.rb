@@ -127,9 +127,10 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
       )
       .to_return(status: 200, body: response_with_warning)
 
+    expect(EbayRequest).to receive(:log_warn).and_return(true)
+
     response = subject.response("AddItem", Item: { Title: "i" })
 
-    expect(EbayRequest).to receive(:log_warn).and_return(true)
     expect(response).to be_success
     expect(response.errors).to eq({})
     expect(response.warnings).to eq(42 => "Some warning")

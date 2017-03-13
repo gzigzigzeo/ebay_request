@@ -73,12 +73,9 @@ class EbayRequest::Base
 
     response, time = make_request(url, post)
 
-    EbayRequest.log(url, h, b, response)
-    EbayRequest.log_time(callname, time)
-
     response_object = process(parse(response), callname)
   ensure
-    EbayRequest.log_json(
+    EbayRequest.log(
       url: url,
       callname: callname,
       headers: h,

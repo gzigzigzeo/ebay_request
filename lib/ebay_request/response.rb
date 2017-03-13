@@ -13,7 +13,6 @@ class EbayRequest::Response
 
   def data!
     make_a_boom unless success?
-    log_warnings
     data
   end
 
@@ -27,11 +26,6 @@ class EbayRequest::Response
 
   def severity(severity)
     Hash[errors_data.map { |s, c, m| [c.to_i, m] if s == severity }.compact]
-  end
-
-  def log_warnings
-    return if warnings.empty?
-    EbayRequest.log_warn(callname, warnings.inspect)
   end
 
   def error_class

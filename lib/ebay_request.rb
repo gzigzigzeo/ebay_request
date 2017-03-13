@@ -38,23 +38,30 @@ module EbayRequest
       !@config_repository.nil?
     end
 
-    def log(url, headers, body, response)
-      return if logger.nil?
-
-      logger.info "[EbayRequest] | Url      | #{url}"
-      logger.info "[EbayRequest] | Headers  | #{headers}"
-      logger.info "[EbayRequest] | Body     | #{body}"
-      logger.info "[EbayRequest] | Response | #{fix_utf(response)}"
+    def log(options)
+      log_info(options)
+      log_warn(options)
+      log_json(options)
     end
 
-    def log_time(callname, time)
+    # rubocop:disable Metrics/AbcSize
+    def log_info(o)
       return if logger.nil?
-      logger.info "[EbayRequest] | Time     | #{time} #{callname}"
-    end
 
-    def log_warn(callname, message)
-      return if warn_logger.nil?
-      warn_logger.warn "[EbayRequest] | #{callname} | #{message}"
+      logger.info "[EbayRequest] | Url      | #{o[:url]}"
+      logger.info "[EbayRequest] | Headers  | #{o[:headers]}"
+      logger.info "[EbayRequest] | Body     | #{o[:request_payload]}"
+      logger.info "[EbayRequest] | Response | #{fix_utf(o[:response_payload])}"
+      logger.info "[EbayRequest] | Time     | #{o[:time]} #{o[:callname]}"
+    end
+    # rubocop:enable Metrics/AbcSize
+
+    def log_warn(o)
+      return if warn_logger.nil? || o[:warnings].empty?
+
+      warn_logger.warn(
+        "[EbayRequest] | #{o[:callname]} | #{o[:warnings].inspect}"
+      )
     end
 
     def log_json(options)
