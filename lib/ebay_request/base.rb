@@ -79,7 +79,7 @@ class EbayRequest::Base
     process(parse(response), callname).tap do |response_object|
       EbayRequest.log_json(
         url: url,
-        short_message: callname,
+        callname: callname,
         headers: h,
         request_payload: b,
         response_payload: response,
