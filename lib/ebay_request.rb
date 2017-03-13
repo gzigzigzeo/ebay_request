@@ -47,7 +47,6 @@ module EbayRequest
     # rubocop:disable Metrics/AbcSize
     def log_info(o)
       return if logger.nil?
-
       logger.info "[EbayRequest] | Url      | #{o[:url]}"
       logger.info "[EbayRequest] | Headers  | #{o[:headers]}"
       logger.info "[EbayRequest] | Body     | #{o[:request_payload]}"
@@ -58,7 +57,6 @@ module EbayRequest
 
     def log_warn(o)
       return if warn_logger.nil? || o[:warnings].empty?
-
       warn_logger.warn(
         "[EbayRequest] | #{o[:callname]} | #{o[:warnings].inspect}"
       )
@@ -66,7 +64,7 @@ module EbayRequest
 
     def log_json(options)
       return if json_logger.nil?
-      json_logger.log(options)
+      json_logger.info(options)
     end
 
     def fix_utf(response)
