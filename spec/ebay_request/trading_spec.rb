@@ -129,12 +129,11 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 
     response = subject.response("AddItem", Item: { Title: "i" })
 
+    expect(EbayRequest).to receive(:log_warn).and_return(true)
     expect(response).to be_success
     expect(response.errors).to eq({})
     expect(response.warnings).to eq(42 => "Some warning")
-    expect(EbayRequest).to receive(:log_warn).and_return(true)
-
-    expect(response.data!).to be
+    expect(response.data!).to be    
   end
 
   it "#response with multiple errors" do

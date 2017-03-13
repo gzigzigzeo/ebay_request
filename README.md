@@ -36,6 +36,7 @@ end
 
 EbayRequest.logger = Logger.new("ebay-request.log")
 EbayRequest.warn_logger = Logger.new("ebay-request-warn.log") # Not logged otherwise
+EbayRequest.json_logger = GraylogProxy.new # Should receive #notify
 ```
 
 ```ruby
