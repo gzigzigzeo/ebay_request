@@ -133,7 +133,7 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     expect(response).to be_success
     expect(response.errors).to eq({})
     expect(response.warnings).to eq(42 => "Some warning")
-    expect(response.data!).to be    
+    expect(response.data!).to be
   end
 
   it "#response with multiple errors" do
