@@ -76,17 +76,17 @@ class EbayRequest::Base
     EbayRequest.log(url, h, b, response)
     EbayRequest.log_time(callname, time)
 
-    process(parse(response), callname).tap do |response_object|
-      EbayRequest.log_json(
-        url: url,
-        callname: callname,
-        headers: h,
-        request_payload: b,
-        response_payload: response,
-        time: time,
-        warnings: response_object.warnings
-      )
-    end
+    response_object = process(parse(response), callname)
+  ensure
+    EbayRequest.log_json(
+      url: url,
+      callname: callname,
+      headers: h,
+      request_payload: b,
+      response_payload: response,
+      time: time,
+      warnings: response_object.warnings
+    )
   end
   # rubocop:enable Metrics/MethodLength
 
