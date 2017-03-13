@@ -76,7 +76,7 @@ class EbayRequest::Base
     response_object = process(parse(response), callname)
   ensure
     EbayRequest.log(
-      url: url,
+      url: url.to_s,
       callname: callname,
       headers: h,
       request_payload: b,
