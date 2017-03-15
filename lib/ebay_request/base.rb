@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EbayRequest::Base
   def initialize(options = {})
     @options = options
@@ -60,6 +61,7 @@ class EbayRequest::Base
   end
 
   def with_sandbox(value)
+    # rubocop:disable Style/FormatString
     value % { sandbox: config.sandbox? ? ".sandbox" : "" }
   end
 
@@ -82,9 +84,9 @@ class EbayRequest::Base
       request_payload: b,
       response_payload: response,
       time: time,
-      warnings: response_object.warnings,
-      errors: response_object.errors,
-      success: response_object.success?
+      warnings: response_object&.warnings,
+      errors: response_object&.errors,
+      success: response_object&.success?
     )
   end
   # rubocop:enable Metrics/MethodLength

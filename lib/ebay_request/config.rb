@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EbayRequest::Config
   attr_accessor :appid
   attr_accessor :certid

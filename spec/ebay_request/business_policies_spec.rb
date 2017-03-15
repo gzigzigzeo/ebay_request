@@ -1,6 +1,9 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 describe EbayRequest::BusinessPolicies do
+  subject { described_class.new(siteid: "SITEID", token: "some_token") }
+
   let(:config) do
     EbayRequest::Config.new.tap do |c|
       c.appid = "1"
@@ -48,8 +51,6 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 <message>Some warning</message><errorId>11</errorId></error>
 </errorMessage></getSellerProfilesResponse>)
   end
-
-  subject { described_class.new(siteid: "SITEID", token: "some_token") }
 
   it "sends request and parses response" do
     stub_request(

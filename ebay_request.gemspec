@@ -1,8 +1,10 @@
 # coding: utf-8
+# frozen_string_literal: true
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "ebay_request/version"
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
   spec.name          = "ebay_request"
   spec.version       = EbayRequest::VERSION
@@ -41,3 +43,4 @@ gem pushes."
   spec.add_dependency "omniauth"
   spec.add_dependency "dry-initializer"
 end
+# rubocop:enable Metrics/BlockLength

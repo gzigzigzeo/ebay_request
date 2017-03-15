@@ -1,3 +1,8 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - bin/**/*
+
 Documentation:
   Enabled: false
 
@@ -6,3 +11,7 @@ Style/StringLiterals:
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*

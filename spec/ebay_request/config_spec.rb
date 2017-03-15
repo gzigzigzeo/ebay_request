@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 describe EbayRequest::Config do
@@ -12,7 +13,7 @@ describe EbayRequest::Config do
       subject.devid = "3"
       subject.runame = "4"
 
-      expect { subject.validate! }.to_not raise_error
+      expect { subject.validate! }.not_to raise_error
     end
   end
 

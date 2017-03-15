@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 class EbayRequest::BusinessPolicies < EbayRequest::Base
   private
 
-  SERVICE_NAME = "SellerProfilesManagementService".freeze
+  SERVICE_NAME = "SellerProfilesManagementService"
 
   def payload(callname, request)
-    key_converter = -> (key) { key.camelize(:lower) }
+    key_converter = ->(key) { key.camelize(:lower) }
     request = Gyoku.xml(request, key_converter: key_converter)
 
     %(<?xml version="1.0" encoding="utf-8"?>\

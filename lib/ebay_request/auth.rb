@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EbayRequest::Auth < EbayRequest::Trading
   def session_id
     response!("GetSessionID", RuName: config.runame)

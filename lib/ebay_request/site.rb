@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class EbayRequest::Site
   KEYS = %w(
     globalid id name currency language domain code metric country gtc_available
