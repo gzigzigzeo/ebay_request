@@ -9,7 +9,8 @@ class EbayRequest::Auth < EbayRequest::Trading
   end
 
   def user(auth_token)
-    response!("GetUser", RequesterCredentials: { eBayAuthToken: auth_token })
+    response!("GetUser", RequesterCredentials: { eBayAuthToken: auth_token },
+                         DetailLevel: "ReturnAll")
   end
 
   def ebay_login_url(session_id, ruparams = {})
