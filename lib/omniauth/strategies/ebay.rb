@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class OmniAuth::Strategies::Ebay
   include OmniAuth::Strategy
 
-  args [:runame, :devid, :appid, :certid]
+  args %i[runame devid appid certid]
 
   option :runame,  nil
   option :devid,   nil
