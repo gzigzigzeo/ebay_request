@@ -20,7 +20,9 @@ class OmniAuth::Strategies::Ebay
       user_id:    raw_info["UserID"],
       auth_token: @auth_token,
       email:      raw_info["Email"],
-      full_name:  raw_info["RegistrationAddress"].try(:[], "Name"),
+      full_name: full_name,
+      first_name: parsed_name[0],
+      last_name: parsed_name[1],
       eias_token: raw_info["EIASToken"]
     }
   end
@@ -53,6 +55,14 @@ class OmniAuth::Strategies::Ebay
 
   def raw_info
     @user_info["User"]
+  end
+
+  def full_name
+    @full_name ||= raw_info["RegistrationAddress"].try(:[], "Name")
+  end
+
+  def parsed_name
+    @parsed_name ||= (full_name || "").split(" ", 2)
   end
 
   def ebay
