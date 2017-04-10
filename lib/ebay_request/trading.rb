@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Trading < EbayRequest::Base
   class IllegalItemStateError < EbayRequest::Error; end
   class ItemLimitReachedError < EbayRequest::Error; end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Base
   def initialize(options = {})
     @options = options

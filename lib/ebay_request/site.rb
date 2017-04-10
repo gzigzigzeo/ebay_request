@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 class EbayRequest::Site
-  KEYS = %w(
+  KEYS = %w[
     globalid id name currency language domain code metric country gtc_available
     free_placement max_insertion_fee free_pictures subtitle_fee quantity_limits
-  ).freeze
+  ].freeze
 
   attr_reader(*KEYS)
 

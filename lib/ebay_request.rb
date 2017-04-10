@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "omniauth"
 require "net/http"
 require "gyoku"
