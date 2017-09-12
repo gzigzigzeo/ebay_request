@@ -165,13 +165,13 @@
 
 - globalid: EBAY-GB
   id: 3
-  name: UK
+  name: GB
   currency: GBP
   language: en
   domain: ebay.co.uk
   metric: metric
-  country: UK
-  shipping_zones: [UK, Europe]
+  country: GB
+  shipping_zones: [GB, Europe]
   free_placement: 0
   max_insertion_fee: 0.26
   free_pictures: 12
