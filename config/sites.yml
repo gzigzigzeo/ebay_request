@@ -2,6 +2,7 @@
 - globalid: EBAY-US
   id: 0
   name: US
+  code: US
   currency: USD
   language: en
   domain: ebay.com
@@ -18,6 +19,7 @@
 - globalid: EBAY-RU
   id: 215
   name: Russia
+  code: RU
   currency: RUB
   language: ru
   domain: ebay.com
@@ -35,6 +37,7 @@
 - globalid: EBAY-AT
   id: 16
   name: Austria
+  code: AT
   currency: EUR
   language: de
   domain: ebay.at
@@ -45,6 +48,7 @@
 - globalid: EBAY-AU
   id: 15
   name: Australia
+  code: AU
   currency: AUD
   language: en
   domain: ebay.com.au
@@ -61,6 +65,7 @@
 - globalid: EBAY-CH
   id: 193
   name: Switzerland
+  code: CH
   currency: CHF
   language: de
   domain: ebay.ch
@@ -71,6 +76,7 @@
 - globalid: EBAY-DE
   id: 77
   name: Germany
+  code: DE
   currency: EUR
   language: de
   domain: ebay.de
@@ -89,6 +95,7 @@
 - globalid: EBAY-ENCA
   id: 2
   name: Canada
+  code: CA
   currency: CAD
   language: en
   domain: ebay.ca
@@ -106,6 +113,7 @@
 - globalid: EBAY-ES
   id: 186
   name: Spain
+  code: ES
   currency: EUR
   language: es
   domain: ebay.es
@@ -122,6 +130,7 @@
 - globalid: EBAY-FR
   id: 71
   name: France
+  code: FR
   currency: EUR
   language: fr
   domain: ebay.fr
@@ -139,6 +148,7 @@
 - globalid: EBAY-FRBE
   id: 23
   name: Belgium_French
+  code: BEFR
   currency: EUR
   language: fr
   domain: ebay.be
@@ -149,6 +159,7 @@
 - globalid: EBAY-FRCA
   id: 210
   name: CanadaFrench
+  code: CAFR
   currency: CAD
   language: fr
   domain: ebay.ca
@@ -165,7 +176,8 @@
 
 - globalid: EBAY-GB
   id: 3
-  name: GB
+  name: UK
+  code: UK
   currency: GBP
   language: en
   domain: ebay.co.uk
@@ -182,6 +194,7 @@
 - globalid: EBAY-HK
   id: 201
   name: HongKong
+  code: HK
   currency: HKD
   language: zh
   domain: ebay.com.hk
@@ -192,6 +205,7 @@
 - globalid: EBAY-IE
   id: 205
   name: Ireland
+  code: IE
   currency: EUR
   language: en
   domain: ebay.ie
@@ -202,6 +216,7 @@
 - globalid: EBAY-IN
   id: 203
   name: India
+  code: IN
   currency: INR
   language: en
   domain: ebay.in
@@ -212,6 +227,7 @@
 - globalid: EBAY-IT
   id: 101
   name: Italy
+  code: IT
   currency: EUR
   language: it
   domain: ebay.it
@@ -229,6 +245,7 @@
 - globalid: EBAY-MOTOR
   id: 100
   name: US Motors
+  code: MOTOR
   currency: USD
   language: en
   domain: ebay.com/motors
@@ -240,6 +257,7 @@
 - globalid: EBAY-MY
   id: 207
   name: Malaysia
+  code: MY
   currency: MYR
   language: en
   domain: ebay.com.my
@@ -250,6 +268,7 @@
 - globalid: EBAY-NL
   id: 146
   name: Netherlands
+  code: NL
   currency: EUR
   language: nl
   domain: ebay.nl
@@ -260,6 +279,7 @@
 - globalid: EBAY-NLBE
   id: 123
   name: Belgium_Dutch
+  code: BENL
   currency: EUR
   language: de
   domain: ebay.nl
@@ -270,6 +290,7 @@
 - globalid: EBAY-PH
   id: 211
   name: Philippines
+  code: PH
   currency: PHP
   language: en
   domain: ebay.ph
@@ -280,6 +301,7 @@
 - globalid: EBAY-PL
   id: 212
   name: Poland
+  code: PL
   currency: PLN
   language: pl
   domain: ebay.pl
@@ -290,6 +312,7 @@
 - globalid: EBAY-SG
   id: 216
   name: Singapore
+  code: SG
   currency: SGD
   language: en
   domain: ebay.com.sg
