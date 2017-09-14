@@ -10,8 +10,6 @@ class EbayRequest::Site
 
   def initialize(hash)
     @hash = hash
-    @hash["code"] = @hash["globalid"].gsub("EBAY-", "")
-
     KEYS.each { |key| instance_variable_set(:"@#{key}", hash[key]) }
   end
 
