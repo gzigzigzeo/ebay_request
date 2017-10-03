@@ -14,7 +14,11 @@ class EbayRequest::Auth < EbayRequest::Trading
   end
 
   def ebay_login_url(session_id, ruparams = {})
-    params = ["SignIn", "RuName=#{config.runame}", "SessID=#{session_id}"]
+    params = [
+      "SignIn",
+      "RuName=#{CGI.escape(config.runame)}",
+      "SessID=#{CGI.escape(session_id)}",
+    ]
     ruparams = CGI.escape(ruparams.map { |k, v| "#{k}=#{v}" }.join("&"))
     params << "ruparams=#{CGI.escape(ruparams)}"
 
