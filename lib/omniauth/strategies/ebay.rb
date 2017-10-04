@@ -43,7 +43,7 @@ class OmniAuth::Strategies::Ebay
   def ebay
     @ebay ||= begin
       params = { auth_method: options.auth_method, site_id: options.site_id }
-      EbayRequest::Auth.new(params).adapter
+      EbayRequest::Auth.new(params).adapter(request)
     end
   end
 end
