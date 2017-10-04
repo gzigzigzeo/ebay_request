@@ -75,6 +75,14 @@ end
 
 If you want to use just strategy you can pass all the required options as `#provider` args ([see source](https://github.com/gzigzigzeo/ebay_request/blob/master/lib/omniauth/strategies/ebay.rb#L4)).
 
+By default, legacy `auth'n'auth` authentication method is being used. You can use new `oauth` method by passing it to `#provider` args:
+
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :ebay, auth_method: :oauth
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

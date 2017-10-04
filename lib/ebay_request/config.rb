@@ -8,6 +8,7 @@ class EbayRequest::Config
   attr_accessor :sandbox
   attr_accessor :version
   attr_accessor :timeout
+  attr_accessor :auth_method
 
   alias sandbox? sandbox
 

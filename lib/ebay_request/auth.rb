@@ -1,35 +1,19 @@
-# frozen_string_literal: true
-class EbayRequest::Auth < EbayRequest::Trading
-  def session_id
-    response!("GetSessionID", RuName: config.runame)
-  end
+class EbayRequest::Auth
+  extend Dry::Initializer::Mixin
 
-  def token(session_id)
-    response!("FetchToken", SessionID: session_id)
-  end
+  class UnknownAdapter < RuntimeError; end
 
-  def user(auth_token)
-    response!("GetUser", RequesterCredentials: { eBayAuthToken: auth_token },
-                         DetailLevel: "ReturnAll")
-  end
+  option :site_id
+  option :auth_method, default: proc { :auth_n_auth }
 
-  def ebay_login_url(session_id, ruparams = {})
-    params = [
-      "SignIn",
-      "RuName=#{CGI.escape(config.runame)}",
-      "SessID=#{CGI.escape(session_id)}",
-    ]
-    ruparams = CGI.escape(ruparams.map { |k, v| "#{k}=#{v}" }.join("&"))
-    params << "ruparams=#{CGI.escape(ruparams)}"
-
-    "#{signin_endpoint}?#{params.join('&')}"
-  end
-
-  private
-
-  def signin_endpoint
-    URI.parse(
-      with_sandbox("https://signin%{sandbox}.ebay.com/ws/eBayISAPI.dll")
-    )
+  def adapter
+    @adapter ||=
+      case auth_method
+      when :auth_n_auth
+        require_relative "./auth/auth_n_auth"
+        AuthNAuth.new(site_id: site_id)
+      else
+        raise UnknownAdapter, "#{auth_method} is unknown auth method"
+      end
   end
 end
