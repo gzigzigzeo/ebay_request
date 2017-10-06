@@ -29,15 +29,21 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def headers(callname)
-    super.merge(
+    authorized_headers = {
       "Content-Type" => "text/xml",
       "X-EBAY-API-APP-NAME" => EbayRequest.config.appid,
       "X-EBAY-API-DEV-NAME" => EbayRequest.config.devid,
       "X-EBAY-API-CERT-NAME" => EbayRequest.config.certid,
       "X-EBAY-API-COMPATIBILITY-LEVEL" => EbayRequest.config.version.to_s,
       "X-EBAY-API-CALL-NAME" => callname,
-      "X-EBAY-API-SITEID" => siteid.to_s
-    )
+      "X-EBAY-API-SITEID" => siteid.to_s,
+    }
+    if options[:token_set]
+      authorized_headers.merge!(
+        "X-EBAY-API-IAF-TOKEN" => options[:token_set].access_token,
+      )
+    end
+    super.merge(authorized_headers)
   end
 
   def errors_for(r)
