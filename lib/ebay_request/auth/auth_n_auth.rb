@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Auth::AuthNAuth < EbayRequest::Trading
   attr_writer :session_id
 
@@ -13,14 +14,14 @@ class EbayRequest::Auth::AuthNAuth < EbayRequest::Trading
 
   def info
     {
-        user_id:    raw_info["UserID"],
-        auth_token: auth_token[0],
-        email:      raw_info["Email"],
-        full_name:  full_name,
-        first_name: parsed_name[0],
-        last_name:  parsed_name[1],
-        eias_token: raw_info["EIASToken"],
-        country:    raw_info["RegistrationAddress"].try(:[], "Country"),
+      user_id:    raw_info["UserID"],
+      auth_token: auth_token[0],
+      email:      raw_info["Email"],
+      full_name:  full_name,
+      first_name: parsed_name[0],
+      last_name:  parsed_name[1],
+      eias_token: raw_info["EIASToken"],
+      country:    raw_info["RegistrationAddress"].try(:[], "Country"),
     }
   end
 
@@ -72,7 +73,7 @@ class EbayRequest::Auth::AuthNAuth < EbayRequest::Trading
 
   def signin_endpoint
     URI.parse(
-      with_sandbox("https://signin%{sandbox}.ebay.com/ws/eBayISAPI.dll")
+      with_sandbox("https://signin%{sandbox}.ebay.com/ws/eBayISAPI.dll"),
     )
   end
 end

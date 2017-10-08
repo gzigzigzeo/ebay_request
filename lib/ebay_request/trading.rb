@@ -39,9 +39,8 @@ class EbayRequest::Trading < EbayRequest::Base
       "X-EBAY-API-SITEID" => siteid.to_s,
     }
     if options[:token_set]
-      authorized_headers.merge!(
-        "X-EBAY-API-IAF-TOKEN" => options[:token_set].access_token,
-      )
+      authorized_headers["X-EBAY-API-IAF-TOKEN"] =
+        options[:token_set].access_token
     end
     super.merge(authorized_headers)
   end

@@ -52,19 +52,22 @@ class EbayRequest::TokenSet
   private
 
   def refresh_token_request!
-    user, pass = EbayRequest.config.appid, EbayRequest.config.certid
     response = HTTParty.post(
       token_endpoint,
       body: { grant_type: "refresh_token", refresh_token: refresh_token },
-      basic_auth: { username: user, password: pass },
-      timeout: EbayRequest.config.timeout,
+      basic_auth: { username: config.appid, password: config.certid },
+      timeout: config.timeout,
     )
     return JSON.parse(response.body) if [200, 400].include?(response.code)
-    raise EbayRequest::Error.new("Can't refresh token: #{response.body}")
+    raise EbayRequest::Error, "Can't refresh access token: #{response.body}"
   end
 
   def token_endpoint
-    environment = EbayRequest.config.sandbox? ? ".sandbox" : ""
-    "https://api#{ environment }.ebay.com/identity/v1/oauth2/token"
+    environment = config.sandbox? ? ".sandbox" : ""
+    "https://api#{environment}.ebay.com/identity/v1/oauth2/token"
+  end
+
+  def config
+    EbayRequest.config
   end
 end

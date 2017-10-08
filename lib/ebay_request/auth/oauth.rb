@@ -35,25 +35,25 @@ class EbayRequest::Auth::OAuth
   def credentials
     @credentials ||= begin
       now = Time.now
-      response = request!(
-        "https://api#{config.sandbox && '.sandbox'}.ebay.com/identity/v1/oauth2/token",
+      data = request!(
+        token_endpoint,
         grant_type:   "authorization_code",
         code:         @request.params["code"],
         redirect_uri: config.runame,
       )
       {
-        token:                    response["access_token"],
+        token:                    data["access_token"],
         expires:                  true,
-        expires_at:               (now + response["expires_in"]).to_i,
-        refresh_token:            response["refresh_token"],
-        refresh_token_expires_at: (now + response["refresh_token_expires_in"]).to_i,
+        expires_at:               (now + data["expires_in"]).to_i,
+        refresh_token:            data["refresh_token"],
+        refresh_token_expires_at: (now + data["refresh_token_expires_in"]).to_i,
       }
     end
   end
 
   def raw_info
     @raw_info ||= begin
-      auth_headers = {"X-EBAY-API-IAF-TOKEN" => credentials[:token]}
+      auth_headers = { "X-EBAY-API-IAF-TOKEN" => credentials[:token] }
       EbayRequest::Trading.new(headers: auth_headers).response!(
         "GetUser",
         DetailLevel: "ReturnAll",
@@ -101,8 +101,13 @@ class EbayRequest::Auth::OAuth
 
   def signin_endpoint
     URI.parse(
-      "https://signin#{config.sandbox && '.sandbox'}.ebay.com/authorize"
+      "https://signin#{config.sandbox && '.sandbox'}.ebay.com/authorize",
     )
+  end
+
+  def token_endpoint
+    environment_subdomain = config.sandbox ? ".sandbox" : ""
+    "https://api#{environment_subdomain}.ebay.com/identity/v1/oauth2/token"
   end
 
   def request!(url, data)

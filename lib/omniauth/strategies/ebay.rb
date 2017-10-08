@@ -1,16 +1,17 @@
 # frozen_string_literal: true
+
 class OmniAuth::Strategies::Ebay
   include OmniAuth::Strategy
 
-  args [:runame, :devid, :appid, :certid]
+  args %i[runame :devid :appid :certid]
 
-  option :auth_method, :auth_n_auth
   option :runame,  nil
   option :devid,   nil
   option :appid,   nil
   option :certid,  nil
   option :site_id, "0"
   option :sandbox, true
+  option :auth_method, :auth_n_auth
 
   uid         { ebay.uid }
   credentials { ebay.credentials }
