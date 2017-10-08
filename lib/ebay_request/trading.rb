@@ -18,7 +18,7 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def creds
-    return if options[:token].nil?
+    return if options[:token].nil? || options[:token_set].present?
     %(<RequesterCredentials>\
 <eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
