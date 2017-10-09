@@ -12,6 +12,7 @@ class OmniAuth::Strategies::Ebay
   option :site_id, "0"
   option :sandbox, true
   option :auth_method, :auth_n_auth
+  option :oauth_scopes, nil
 
   uid         { ebay.uid }
   credentials { ebay.credentials }
@@ -32,12 +33,13 @@ class OmniAuth::Strategies::Ebay
 
   def configure
     EbayRequest.configure do |config|
-      config.runame      = options.runame
-      config.devid       = options.devid
-      config.appid       = options.appid
-      config.certid      = options.certid
-      config.sandbox     = options.sandbox
-      config.auth_method = options.auth_method
+      config.runame       = options.runame
+      config.devid        = options.devid
+      config.appid        = options.appid
+      config.certid       = options.certid
+      config.sandbox      = options.sandbox
+      config.auth_method  = options.auth_method
+      config.oauth_scopes = options.oauth_scopes
     end
   end
 

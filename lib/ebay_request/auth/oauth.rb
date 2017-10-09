@@ -61,7 +61,7 @@ class EbayRequest::Auth::OAuth
   end
 
   def ebay_login_url(_ = {})
-    scope = scopes.map { |s| "https://api.ebay.com/oauth/#{s}" }.join(" ")
+    scope = (config.oauth_scopes || default_scopes).join(" ")
     params = %W[
       client_id=#{CGI.escape(config.appid)}
       response_type=code
@@ -79,7 +79,7 @@ class EbayRequest::Auth::OAuth
     EbayRequest.config
   end
 
-  def scopes
+  def default_scopes
     %w[
       api_scope
       api_scope/sell.marketing.readonly api_scope/sell.marketing
@@ -87,7 +87,7 @@ class EbayRequest::Auth::OAuth
       api_scope/sell.account.readonly api_scope/sell.account
       api_scope/sell.fulfillment.readonly api_scope/sell.fulfillment
       api_scope/sell.analytics.readonly
-    ]
+    ].map { |s| "https://api.ebay.com/oauth/#{s}" }
   end
 
   def full_name
