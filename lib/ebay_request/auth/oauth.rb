@@ -27,7 +27,7 @@ class EbayRequest::Auth::OAuth
       first_name: parsed_name[0],
       last_name:  parsed_name[1],
       eias_token: raw_info["EIASToken"],
-      country:    raw_info["RegistrationAddress"].try(:[], "Country"),
+      country:    raw_info.dig("RegistrationAddress", "Country"),
       nickname:   raw_info["UserID"],
     }
   end
@@ -92,11 +92,11 @@ class EbayRequest::Auth::OAuth
   end
 
   def full_name
-    @full_name ||= raw_info["RegistrationAddress"].try(:[], "Name")
+    @full_name ||= raw_info.dig("RegistrationAddress", "Name")
   end
 
   def parsed_name
-    @parsed_name ||= (full_name || "").split(" ", 2)
+    @parsed_name ||= full_name&.split(" ", 2) || []
   end
 
   def signin_endpoint
