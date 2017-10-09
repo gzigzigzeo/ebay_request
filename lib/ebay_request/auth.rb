@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EbayRequest::Auth
-  extend Dry::Initializer::Mixin
+  extend Dry::Initializer
 
   class UnknownAdapter < RuntimeError; end
 

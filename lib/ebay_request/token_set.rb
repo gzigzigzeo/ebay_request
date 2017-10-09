@@ -5,7 +5,7 @@ require "httparty"
 # Holds access token from OAuth method for using with all eBay APIs
 # Retrieves new access token every time when current become outdated.
 class EbayRequest::TokenSet
-  extend Dry::Initializer::Mixin
+  extend Dry::Initializer
 
   class RefreshTokenExpired < EbayRequest::Error; end
   class RefreshTokenInvalid < EbayRequest::Error; end
