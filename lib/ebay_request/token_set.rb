@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "httparty"
-
 # Holds access token from OAuth method for using with all eBay APIs
 # Retrieves new access token every time when current become outdated.
 class EbayRequest::TokenSet
@@ -52,19 +50,29 @@ class EbayRequest::TokenSet
   private
 
   def refresh_token_request!
-    response = HTTParty.post(
+    response = request!(
       token_endpoint,
-      body: { grant_type: "refresh_token", refresh_token: refresh_token },
-      basic_auth: { username: config.appid, password: config.certid },
-      timeout: config.timeout,
+      grant_type: "refresh_token", refresh_token: refresh_token,
     )
-    return JSON.parse(response.body) if [200, 400].include?(response.code)
+    return JSON.parse(response.body) if %w[200 400].include?(response.code)
     raise EbayRequest::Error, "Can't refresh access token: #{response.body}"
   end
 
   def token_endpoint
     environment = config.sandbox? ? ".sandbox" : ""
     "https://api#{environment}.ebay.com/identity/v1/oauth2/token"
+  end
+
+  def request!(url, data)
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port).tap do |http|
+      http.read_timeout = config.timeout
+      http.use_ssl = uri.scheme == "https"
+    end
+    post = Net::HTTP::Post.new(uri.path)
+    post.body = URI.encode_www_form(data)
+    post.basic_auth config.appid, config.certid
+    http.start { |r| r.request(post) }
   end
 
   def config

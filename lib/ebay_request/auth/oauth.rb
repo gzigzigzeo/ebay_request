@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "../auth"
-require "httparty"
 
 class EbayRequest::Auth::OAuth
   attr_writer :session_id
@@ -111,13 +110,16 @@ class EbayRequest::Auth::OAuth
   end
 
   def request!(url, data)
-    response = HTTParty.post(
-      url,
-      body: data,
-      basic_auth: { username: config.appid, password: config.certid },
-      timeout: config.timeout,
-    )
-    raise response.body unless response.success?
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port).tap do |http|
+      http.read_timeout = config.timeout
+      http.use_ssl = uri.scheme == "https"
+    end
+    post = Net::HTTP::Post.new(uri.path)
+    post.body = URI.encode_www_form(data)
+    post.basic_auth config.appid, config.certid
+    response = http.start { |r| r.request(post) }
+    raise response.body unless response.code == "200"
     JSON.parse(response.body)
   end
 end
