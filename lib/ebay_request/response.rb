@@ -13,7 +13,7 @@ class EbayRequest::Response
   end
 
   def data!
-    make_a_boom unless success?
+    raise error unless success?
     data
   end
 
@@ -34,7 +34,7 @@ class EbayRequest::Response
     fatal_errors[fatal_code] || EbayRequest::Error
   end
 
-  def make_a_boom
-    raise error_class.new(errors.values.join(", "), errors)
+  def error
+    error_class.new(errors.values.join(", "), errors)
   end
 end

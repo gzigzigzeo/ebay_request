@@ -4,6 +4,7 @@ class EbayRequest::Trading < EbayRequest::Base
   class ItemLimitReachedError < EbayRequest::Error; end
   class DailyItemCallLimitReachedError < EbayRequest::Error; end
   class TokenValidationFailed < EbayRequest::Error; end
+  class IAFTokenExpired < TokenValidationFailed; end
   class AccountSuspended < EbayRequest::Error; end
   class ApplicationInvalid < EbayRequest::Error; end
 
@@ -52,6 +53,19 @@ class EbayRequest::Trading < EbayRequest::Base
       .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
   end
 
+  def request(*)
+    retried ||= false
+    super.tap do |response|
+      next if retried || options[:iaf_token_manager].nil?
+      next if response.success? || response.error_class > IAFTokenExpired
+      raise response.error_class
+    end
+  rescue IAFTokenExpired
+    options[:iaf_token_manager].refresh!
+    retried = true
+    retry
+  end
+
   # http://developer.ebay.com/devzone/xml/docs/reference/ebay/errors/errormessages.htm
   FATAL_ERRORS = {
     291        => IllegalItemStateError,
@@ -61,6 +75,8 @@ class EbayRequest::Trading < EbayRequest::Base
     931        => TokenValidationFailed,
     17_470     => TokenValidationFailed,
     16_110     => TokenValidationFailed,
+    21_916_984 => TokenValidationFailed,
+    21_917_053 => IAFTokenExpired,
     841        => AccountSuspended,
     127        => ApplicationInvalid
   }.freeze
