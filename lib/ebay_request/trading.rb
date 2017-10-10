@@ -18,7 +18,7 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def creds
-    return if options[:token].nil? || options[:token_set].present?
+    return if options[:token].nil? || options[:iaf_token_manager].present?
     %(<RequesterCredentials>\
 <eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
@@ -38,9 +38,9 @@ class EbayRequest::Trading < EbayRequest::Base
       "X-EBAY-API-CALL-NAME" => callname,
       "X-EBAY-API-SITEID" => siteid.to_s,
     }
-    if options[:token_set]
+    if options[:iaf_token_manager]
       authorized_headers["X-EBAY-API-IAF-TOKEN"] =
-        options[:token_set].access_token
+        options[:iaf_token_manager].access_token
     end
     super.merge(authorized_headers)
   end

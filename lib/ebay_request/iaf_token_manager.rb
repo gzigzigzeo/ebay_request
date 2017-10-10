@@ -2,7 +2,7 @@
 
 # Holds access token from OAuth method for using with all eBay APIs
 # Retrieves new access token every time when current become outdated.
-class EbayRequest::TokenSet
+class EbayRequest::IAFTokenManager
   extend Dry::Initializer
 
   class RefreshTokenExpired < EbayRequest::Error; end

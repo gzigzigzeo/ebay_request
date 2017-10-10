@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe EbayRequest::TokenSet do
+describe EbayRequest::IAFTokenManager do
   let(:config) do
     EbayRequest::Config.new.tap do |c|
       c.appid = "1"
@@ -78,7 +78,7 @@ describe EbayRequest::TokenSet do
 
       it "raises exception" do
         expect { subject.refresh! }.to \
-          raise_error(EbayRequest::TokenSet::RefreshTokenExpired)
+          raise_error(EbayRequest::IAFTokenManager::RefreshTokenExpired)
       end
     end
 
@@ -89,7 +89,7 @@ describe EbayRequest::TokenSet do
 
       it "raises exception" do
         expect { subject.refresh! }.to raise_error(
-          EbayRequest::TokenSet::RefreshTokenInvalid, "this is fiasco"
+                                           EbayRequest::IAFTokenManager::RefreshTokenInvalid, "this is fiasco"
         )
       end
     end
