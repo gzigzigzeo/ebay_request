@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class EbayRequest::Response
-  extend Dry::Initializer::Mixin
+  extend Dry::Initializer
 
   param :callname
   param :data
