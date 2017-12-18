@@ -58,7 +58,7 @@ class EbayRequest::Trading < EbayRequest::Base
     super.tap do |response|
       next if retried || options[:iaf_token_manager].nil?
       next if response.success? || response.error_class > IAFTokenExpired
-      raise response.error_class
+      raise response.error
     end
   rescue IAFTokenExpired
     options[:iaf_token_manager].refresh!
