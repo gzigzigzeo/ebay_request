@@ -1,6 +1,6 @@
 # EbayRequest
 
-eBay API request interface.
+eBay XML API request interface.
 
 ## Installation
 
@@ -74,6 +74,44 @@ end
 ```
 
 If you want to use just strategy you can pass all the required options as `#provider` args ([see source](https://github.com/gzigzigzeo/ebay_request/blob/master/lib/omniauth/strategies/ebay.rb#L4)).
+
+This strategy is for Auth'n'auth method only. For OAuth method see the [omniauth-ebay-oauth](https://github.com/evilmartians/omniauth-ebay-oauth) gem.
+
+
+## Working with old XML and new REST API simultaneously
+
+If you're planning to work with new eBay REST APIs, you will find that another kind of access tokens are required for working with these APIs.
+
+Tokens obtained with Auth'n'auth only usable with eBay XML API, while tokens obtained with OAuth only usable with eBay REST API.
+
+However, you can use new OAuth tokens to access old APIs by providing an access token in (not yet) documented HTTP header `X-EBAY-API-IAF-TOKEN`. This gem has builtin support for this.
+
+To use it:
+
+ 1. Replace OmniAuth strategy from this gem to the strategy from the [omniauth-ebay-oauth](https://github.com/evilmartians/omniauth-ebay-oauth) gem.
+
+    Most probably you will need to store and use both Auth'n'auth and OAuth tokens for a while to provide a smooth transition.
+
+ 2. For working with REST API and their tokens add the [ebay_api](https://github.com/nepalez/ebay_api/) gem to your application.
+
+ 3. Construct an `EbayAPI::TokenManager` instance with all OAuth tokens.
+
+    See https://github.com/nepalez/ebay_api/#working-with-access-tokens
+
+    Any object that responds to `refresh!` method and returns actual token from the `access_token` method will be fine too.
+
+ 4. Pass this token manager object in `:iaf_token_manager` option into the XML API constructor:
+
+    ```ruby
+    EbayRequest::Trading.new(
+      token: auth_n_auth_token,
+      iaf_token_manager: iaf_token_manager,
+      siteid: 0,
+    )
+    ```
+
+    You can pass both old token in `:token` option and new token manager in `:iaf_token_manager` option. Old tokens will be used if the token manager is `nil`.
+
 
 ## Development
 
