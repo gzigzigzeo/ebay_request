@@ -54,6 +54,15 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 </Errors></AddItemResponse>)
   end
 
+  let(:response_with_expired_iaf_token_error) do
+    %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
+<Timestamp>2017-10-10T11:07:21.220Z</Timestamp><Ack>Failure</Ack><Errors>
+<ShortMessage>Expired IAF token.</ShortMessage>
+<LongMessage>IAF token supplied is expired. </LongMessage>
+<SeverityCode>Error</SeverityCode><ErrorCode>21917053</ErrorCode>
+</Errors></AddItemResponse>)
+  end
+
   let(:response_with_warning) do
     %(<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
 <Timestamp>2016-04-18T12:12:26.600Z</Timestamp><Ack>Warning</Ack><Errors>
@@ -186,5 +195,33 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
       EbayRequest::Trading::IllegalItemStateError,
       "This listing may be identical to test item"
     )
+  end
+
+  context("using IAF token") do
+    subject { described_class.new(iaf_token_manager: token_manager) }
+
+    let(:token_manager) { instance_double(EbayRequest::IAFTokenManager) }
+
+    before do
+      allow(token_manager).to receive(:refresh!)
+      allow(token_manager).to receive(:access_token).and_return("some_token")
+    end
+
+    it "#response with iaf token expired error tries to refresh token" do
+      stub_request(
+        :post, "https://api.sandbox.ebay.com/ws/api.dll"
+      )
+        .with(body: failing_request, headers: headers)
+        .to_return(status: 200, body: response_with_expired_iaf_token_error)
+        .to_return(status: 200, body: successful_response)
+
+      response = subject.response("AddItem", Item: { Title: "i" })
+
+      expect(token_manager).to have_received(:refresh!)
+      expect(response).to be_success
+      expect(response.errors).to eq({})
+      expect(response.warnings).to eq({})
+      expect(response.data!).to be
+    end
   end
 end

@@ -12,6 +12,12 @@ Style/StringLiterals:
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 
+Style/TrailingCommaInArguments:
+  Description: 'Checks for trailing comma in argument lists.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-params-comma'
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
 Style/TrailingCommaInLiteral:
   Description: 'Checks for trailing comma in array and hash literals.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
