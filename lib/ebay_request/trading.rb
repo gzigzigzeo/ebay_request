@@ -31,10 +31,10 @@ class EbayRequest::Trading < EbayRequest::Base
   def headers(callname)
     super.merge(
       "Content-Type" => "text/xml",
-      "X-EBAY-API-APP-NAME" => EbayRequest.config.appid,
-      "X-EBAY-API-DEV-NAME" => EbayRequest.config.devid,
-      "X-EBAY-API-CERT-NAME" => EbayRequest.config.certid,
-      "X-EBAY-API-COMPATIBILITY-LEVEL" => EbayRequest.config.version.to_s,
+      "X-EBAY-API-APP-NAME" => config.appid,
+      "X-EBAY-API-DEV-NAME" => config.devid,
+      "X-EBAY-API-CERT-NAME" => config.certid,
+      "X-EBAY-API-COMPATIBILITY-LEVEL" => config.version.to_s,
       "X-EBAY-API-CALL-NAME" => callname,
       "X-EBAY-API-SITEID" => siteid.to_s
     )
