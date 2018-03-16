@@ -40,7 +40,7 @@ class EbayRequest::Base
   end
 
   def headers(_callname)
-    {}
+    @options[:headers] || {}
   end
 
   def payload(_callname, _request)
