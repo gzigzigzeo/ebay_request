@@ -10,6 +10,7 @@ class OmniAuth::Strategies::Ebay
   option :certid,  nil
   option :site_id, "0"
   option :sandbox, true
+  option :env,     nil
 
   uid         { raw_info["EIASToken"] }
   credentials { { token: @auth_token, expires_at: @expires_at } }
@@ -44,7 +45,7 @@ class OmniAuth::Strategies::Ebay
   end
 
   def configure
-    EbayRequest.configure do |config|
+    EbayRequest.configure(options.env) do |config|
       config.runame  = options.runame
       config.devid   = options.devid
       config.appid   = options.appid
@@ -66,7 +67,7 @@ class OmniAuth::Strategies::Ebay
   end
 
   def ebay
-    @ebay ||= EbayRequest::Auth.new(site_id: options.site_id)
+    @ebay ||= EbayRequest::Auth.new(site_id: options.site_id, env: options.env)
   end
 
   def fetch_token
