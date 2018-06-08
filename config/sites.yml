@@ -90,7 +90,7 @@
   subtitle_fee: 0.5
   quantity_limits: 9
   gtc_available: true
-  min_fixed_price: # no limit at https://pages.ebay.de/help/sell/fixed-price.html
+  min_fixed_price: 1.00 # but no limit at https://pages.ebay.de/help/sell/fixed-price.html
 
 - globalid: EBAY-ENCA
   id: 2
