@@ -60,7 +60,7 @@
   free_pictures: 12
   subtitle_fee: 2
   gtc_available: true
-  min_fixed_price: # no limit at https://pages.ebay.com.au/help/sell/fixed-price.html
+  min_fixed_price: 1.00 # found experimentally, help page was moved to unknown place
 
 - globalid: EBAY-CH
   id: 193
