@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "ebay_request"
 require "webmock/rspec"
 require "simplecov"
+require "pry"
 
 WebMock.disable_net_connect!
 SimpleCov.start

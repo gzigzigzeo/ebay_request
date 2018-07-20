@@ -37,6 +37,7 @@ gem pushes."
   spec.add_development_dependency "rubocop"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "pry"
 
   spec.add_dependency "multi_xml"
   spec.add_dependency "gyoku"
