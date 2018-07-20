@@ -11,7 +11,8 @@ class EbayRequest::Trading < EbayRequest::Base
   private
 
   def payload(callname, request)
-    request = Gyoku.xml(request, key_converter: :camelcase)
+    key_converter = :camelcase
+    request = Gyoku.xml(request, key_converter: key_converter)
 
     %(<?xml version="1.0" encoding="utf-8"?>\
 <#{callname}Request xmlns="urn:ebay:apis:eBLBaseComponents">\
@@ -19,7 +20,7 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def creds
-    return if options[:token].nil? || options[:iaf_token_manager].present?
+    return if options[:token].nil? || options[:iaf_token_manager]
     %(<RequesterCredentials>\
 <eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
