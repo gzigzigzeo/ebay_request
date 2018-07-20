@@ -42,5 +42,6 @@ gem pushes."
   spec.add_dependency "gyoku"
   spec.add_dependency "omniauth"
   spec.add_dependency "dry-initializer"
+  spec.add_dependency "dry-inflector"
 end
 # rubocop:enable Metrics/BlockLength
