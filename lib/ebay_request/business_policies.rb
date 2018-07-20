@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::BusinessPolicies < EbayRequest::Base
   IAFTokenExpired = Class.new(EbayRequest::Error)
 
@@ -19,33 +20,37 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
     "https://svcs%{sandbox}.ebay.com/services/selling/v1/#{SERVICE_NAME}"
   end
 
+  def headers(callname)
+    super.merge default_headers(callname).merge(auth_header)
+  end
+
   def global_id(siteid)
     EbayRequest::Config.globalid_from_site_id(siteid)
   end
 
-  def headers(callname)
-    authorized_headers = {
+  def default_headers(callname)
+    {
       "Content-Type"              => "text/xml",
       "X-EBAY-SOA-CONTENT-TYPE"   => "XML",
       "X-EBAY-SOA-GLOBAL-ID"      => global_id(siteid.to_i),
       "X-EBAY-SOA-SERVICE-NAME"   => SERVICE_NAME,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
     }
-
-    if options[:iaf_token_manager]
-      token = options[:iaf_token_manager].access_token
-      authorized_headers["X-EBAY-SOA-SECURITY-IAFTOKEN"] = token
-    else
-      token = options[:token]
-      authorized_headers["X-EBAY-SOA-SECURITY-TOKEN"] = token
-    end
-
-    super.merge(authorized_headers)
   end
 
-  def errors_for(r)
-    [r.dig("errorMessage", "error")].flatten.compact.map do |e|
-      [e["severity"], e["errorId"], e["message"]]
+  def auth_header
+    if options[:iaf_token_manager]
+      token = options[:iaf_token_manager].access_token
+      { "X-EBAY-SOA-SECURITY-IAFTOKEN" => token }
+    else
+      token = options[:token]
+      { "X-EBAY-SOA-SECURITY-TOKEN" => token }
+    end
+  end
+
+  def errors_for(response)
+    [response.dig("errorMessage", "error")].flatten.compact.map do |err|
+      [err["severity"], err["errorId"], err["message"]]
     end
   end
 

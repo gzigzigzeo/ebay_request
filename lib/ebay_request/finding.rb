@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Finding < EbayRequest::Base
   private
 
@@ -25,11 +26,11 @@ class EbayRequest::Finding < EbayRequest::Base
     )
   end
 
-  def errors_for(r)
-    [r.dig("errorMessage", "error")]
+  def errors_for(response)
+    [response.dig("errorMessage", "error")]
       .flatten
       .compact
-      .map { |e| [e["severity"], e["errorId"], e["message"]] }
+      .map { |err| [err["severity"], err["errorId"], err["message"]] }
   end
 
   FATAL_ERRORS = {}.freeze

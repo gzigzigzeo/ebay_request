@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "spec_helper"
 
 describe EbayRequest::Trading do
@@ -22,7 +23,7 @@ describe EbayRequest::Trading do
       "X-Ebay-Api-Cert-Name" => "2",
       "X-Ebay-Api-Compatibility-Level" => "941",
       "X-Ebay-Api-Dev-Name" => "3",
-      "X-Ebay-Api-Siteid" => "0"
+      "X-Ebay-Api-Siteid" => "0",
     }
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Config
   attr_accessor :appid
   attr_accessor :certid
@@ -18,7 +19,7 @@ class EbayRequest::Config
   end
 
   def validate!
-    %w(appid certid devid runame).each do |attr|
+    %w[appid certid devid runame].each do |attr|
       value = public_send(attr)
       raise "Set EbayRequest.config.#{attr}" if value.nil? || value.empty?
     end

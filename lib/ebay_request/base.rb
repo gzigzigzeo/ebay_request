@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Base
   def initialize(options = {})
     @options = options
@@ -63,6 +64,7 @@ class EbayRequest::Base
   def with_sandbox(value)
     # rubocop:disable Style/FormatString
     value % { sandbox: config.sandbox? ? ".sandbox" : "" }
+    # rubocop:enable Style/FormatString
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -109,7 +111,7 @@ class EbayRequest::Base
     end
   end
 
-  def errors_for(_r)
+  def errors_for(_response)
     raise NotImplementedError, "Implement #{self.class.name}#errors_for"
   end
 end
