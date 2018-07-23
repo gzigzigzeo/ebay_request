@@ -1,11 +1,14 @@
 # frozen_string_literal: true
+
 require "omniauth"
 require "net/http"
 require "gyoku"
 require "multi_xml"
 require "dry-initializer"
+require "dry/inflector"
 
 require "ebay_request/version"
+require "ebay_request/inflector"
 require "ebay_request/site"
 require "ebay_request/config"
 require "ebay_request/base"
@@ -46,20 +49,20 @@ module EbayRequest
     end
 
     # rubocop:disable Metrics/AbcSize
-    def log_info(o)
+    def log_info(out)
       return if logger.nil?
-      logger.info "[EbayRequest] | Url      | #{o[:url]}"
-      logger.info "[EbayRequest] | Headers  | #{o[:headers]}"
-      logger.info "[EbayRequest] | Body     | #{o[:request_payload]}"
-      logger.info "[EbayRequest] | Response | #{fix_utf(o[:response_payload])}"
-      logger.info "[EbayRequest] | Time     | #{o[:time]} #{o[:callname]}"
+      logger.info "[EbayRequest] | Url      | #{out[:url]}"
+      logger.info "[EbayRequest] | Headers  | #{out[:headers]}"
+      logger.info "[EbayRequest] | Body     | #{out[:request_payload]}"
+      logger.info "[EbayRequest] | Response | #{fix_utf out[:response_payload]}"
+      logger.info "[EbayRequest] | Time     | #{out[:time]} #{out[:callname]}"
     end
     # rubocop:enable Metrics/AbcSize
 
-    def log_warn(o)
-      return if warn_logger.nil? || o[:warnings].empty?
+    def log_warn(out)
+      return if warn_logger.nil? || out[:warnings].empty?
       warn_logger.warn(
-        "[EbayRequest] | #{o[:callname]} | #{o[:warnings].inspect}"
+        "[EbayRequest] | #{out[:callname]} | #{out[:warnings].inspect}"
       )
     end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "spec_helper"
 
 describe EbayRequest::Finding do
@@ -42,7 +43,7 @@ xmlns="http://www.ebay.com/marketplace/search/v1/services">\
         "X-Ebay-Soa-Request-Data-Format" => "XML",
         "X-Ebay-Soa-Security-Appname" => "1",
         "X-Ebay-Soa-Service-Name" => "FindingService",
-        "X-Ebay-Soa-Service-Version" => "1.9.0"
+        "X-Ebay-Soa-Service-Version" => "1.9.0",
       }
     )
       .to_return(status: 200, body: failing_response)

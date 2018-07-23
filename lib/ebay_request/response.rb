@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Response
   extend Dry::Initializer
 
@@ -9,7 +10,7 @@ class EbayRequest::Response
 
   def success?
     ack = data["ack"] || data["Ack"]
-    %w(Success Warning).include?(ack)
+    %w[Success Warning].include?(ack)
   end
 
   def data!

@@ -1,6 +1,6 @@
-# coding: utf-8
 # frozen_string_literal: true
-lib = File.expand_path("../lib", __FILE__)
+
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "ebay_request/version"
 
@@ -32,15 +32,17 @@ gem pushes."
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.11"
+  spec.add_development_dependency "pry"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop"
-  spec.add_development_dependency "webmock"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "webmock"
 
-  spec.add_dependency "multi_xml"
-  spec.add_dependency "gyoku"
-  spec.add_dependency "omniauth"
+  spec.add_dependency "dry-inflector"
   spec.add_dependency "dry-initializer"
+  spec.add_dependency "gyoku"
+  spec.add_dependency "multi_xml"
+  spec.add_dependency "omniauth"
 end
 # rubocop:enable Metrics/BlockLength

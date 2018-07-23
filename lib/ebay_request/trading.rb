@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Trading < EbayRequest::Base
   class IllegalItemStateError < EbayRequest::Error; end
   class ItemLimitReachedError < EbayRequest::Error; end
@@ -11,7 +12,8 @@ class EbayRequest::Trading < EbayRequest::Base
   private
 
   def payload(callname, request)
-    request = Gyoku.xml(request, key_converter: :camelcase)
+    key_converter = :camelcase
+    request = Gyoku.xml(request, key_converter: key_converter)
 
     %(<?xml version="1.0" encoding="utf-8"?>\
 <#{callname}Request xmlns="urn:ebay:apis:eBLBaseComponents">\
@@ -19,7 +21,7 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def creds
-    return if options[:token].nil? || options[:iaf_token_manager].present?
+    return if options[:token].nil? || options[:iaf_token_manager]
     %(<RequesterCredentials>\
 <eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
@@ -30,7 +32,11 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def headers(callname)
-    authorized_headers = {
+    super.merge default_headers(callname).merge(auth_header)
+  end
+
+  def default_headers(callname)
+    {
       "Content-Type" => "text/xml",
       "X-EBAY-API-APP-NAME" => config.appid,
       "X-EBAY-API-DEV-NAME" => config.devid,
@@ -39,18 +45,18 @@ class EbayRequest::Trading < EbayRequest::Base
       "X-EBAY-API-CALL-NAME" => callname,
       "X-EBAY-API-SITEID" => siteid.to_s,
     }
-    if options[:iaf_token_manager]
-      authorized_headers["X-EBAY-API-IAF-TOKEN"] =
-          options[:iaf_token_manager].access_token
-    end
-    super.merge(authorized_headers)
   end
 
-  def errors_for(r)
-    [r["Errors"]]
+  def auth_header
+    return {} unless options[:iaf_token_manager]
+    { "X-EBAY-API-IAF-TOKEN" => options[:iaf_token_manager].access_token }
+  end
+
+  def errors_for(response)
+    [response["Errors"]]
       .flatten
       .compact
-      .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
+      .map { |err| [err["SeverityCode"], err["ErrorCode"], err["LongMessage"]] }
   end
 
   def request(*)
@@ -78,6 +84,6 @@ class EbayRequest::Trading < EbayRequest::Base
     21_916_984 => TokenValidationFailed,
     21_917_053 => IAFTokenExpired,
     841        => AccountSuspended,
-    127        => ApplicationInvalid
+    127        => ApplicationInvalid,
   }.freeze
 end

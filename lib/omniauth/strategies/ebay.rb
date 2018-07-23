@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class OmniAuth::Strategies::Ebay
   include OmniAuth::Strategy
 
-  args [:runame, :devid, :appid, :certid]
+  args %i[runame devid appid certid]
 
   option :runame,  nil
   option :devid,   nil
@@ -24,7 +25,7 @@ class OmniAuth::Strategies::Ebay
       full_name: full_name,
       first_name: parsed_name[0],
       last_name: parsed_name[1],
-      eias_token: raw_info["EIASToken"]
+      eias_token: raw_info["EIASToken"],
     }
   end
 

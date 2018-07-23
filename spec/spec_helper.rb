@@ -1,8 +1,10 @@
 # frozen_string_literal: true
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "ebay_request"
 require "webmock/rspec"
 require "simplecov"
+require "pry"
 
 WebMock.disable_net_connect!
 SimpleCov.start

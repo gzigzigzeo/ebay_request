@@ -6,16 +6,22 @@ AllCops:
 Documentation:
   Enabled: false
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 
-Style/TrailingCommaInLiteral:
-  Description: 'Checks for trailing comma in array and hash literals.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
-  Enabled: true
+Style/FormatStringToken:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false # `module_function` behaviour differs from `extend self`
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
 Metrics/BlockLength:

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EbayRequest::Shopping < EbayRequest::Base
   private
 
@@ -25,11 +26,11 @@ class EbayRequest::Shopping < EbayRequest::Base
     )
   end
 
-  def errors_for(r)
-    [r["Errors"]]
+  def errors_for(response)
+    [response["Errors"]]
       .flatten
       .compact
-      .map { |e| [e["SeverityCode"], e["ErrorCode"], e["LongMessage"]] }
+      .map { |err| [err["SeverityCode"], err["ErrorCode"], err["LongMessage"]] }
   end
 
   FATAL_ERRORS = {}.freeze
