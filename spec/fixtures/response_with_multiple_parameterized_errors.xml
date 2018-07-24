@@ -1,0 +1,32 @@
+<AddItemResponse xmlns="urn:ebay:apis:eBLBaseComponents">
+  <Timestamp>2018-07-23T08:06:54.240Z</Timestamp>
+  <Ack>Failure</Ack>
+  <Errors>
+    <ShortMessage>Invalid ShippingServiceCost</ShortMessage>
+    <LongMessage>Shipping service cost exceeds   3.50 maximum allowed for selected category.</LongMessage>
+    <ErrorCode>21916260</ErrorCode>
+    <SeverityCode>Error</SeverityCode>
+    <ErrorParameters ParamID="0">
+      <Value>3.50</Value>
+    </ErrorParameters>
+    <ErrorClassification>RequestError</ErrorClassification>
+  </Errors>
+  <Errors>
+    <ShortMessage>Gender should contain only one value.</ShortMessage>
+    <LongMessage>Gender should contain only one value. Remove the extra values and try again.</LongMessage>
+    <ErrorCode>21919309</ErrorCode>
+    <SeverityCode>Error</SeverityCode>
+    <ErrorParameters ParamID="0">
+      <Value>Gender should contain only one value.</Value>
+    </ErrorParameters>
+    <ErrorParameters ParamID="1">
+      <Value>Gender should contain only one value. Remove the extra values and try again.</Value>
+    </ErrorParameters>
+    <ErrorParameters ParamID="2">
+      <Value>Gender</Value>
+    </ErrorParameters>
+    <ErrorClassification>RequestError</ErrorClassification>
+  </Errors>
+  <Version>1069</Version>
+  <Build>E1069_UNI_API5_18749601_R1</Build>
+</AddItemResponse>
