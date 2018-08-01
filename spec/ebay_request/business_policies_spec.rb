@@ -33,13 +33,14 @@ describe EbayRequest::BusinessPolicies do
 
   let(:request) do
     %(<?xml version="1.0" encoding="utf-8"?>\
-<getSellerProfilesRequest xmlns="http://www.ebay.com/marketplace/selling">\
+<getSellerProfilesRequest \
+xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 </getSellerProfilesRequest>)
   end
 
   let(:failing_request) do
     %(<?xml version="1.0" encoding="utf-8"?><getSellerProfilesRequest \
-xmlns="http://www.ebay.com/marketplace/selling">\
+xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 <item><title>i</title></item></getSellerProfilesRequest>)
   end
 

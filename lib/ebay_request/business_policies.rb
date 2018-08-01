@@ -7,13 +7,13 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   SERVICE_NAME = "SellerProfilesManagementService"
 
-  def payload(callname, request)
+  def payload(cname, request)
     key_converter = ->(key) { EbayRequest::Inflector.camelcase_lower(key) }
     request       = Gyoku.xml(request, key_converter: key_converter)
 
     %(<?xml version="1.0" encoding="utf-8"?>\
-<#{callname}Request xmlns="http://www.ebay.com/marketplace/selling">\
-#{request}</#{callname}Request>)
+<#{cname}Request xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
+#{request}</#{cname}Request>)
   end
 
   def endpoint
