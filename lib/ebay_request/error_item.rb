@@ -2,22 +2,19 @@
 
 # A single error from many returned in API response
 class EbayRequest::ErrorItem
-  attr_reader :code, :message, :severity, :params
+  extend Dry::Initializer
 
-  # @param code     [Integer]             Numeric error identifier
-  # @param message  [String]              Human-readable error description
-  # @param severity [String]              Either +Error+ of +Warning+
-  # @param params   [Hash<String,String>] Variable parts of message
-  def initialize(code:, message:, severity:, params: {})
-    @code     = Integer(code)
-    @message  = message
-    @severity = severity
-    @params   = params
+  option :code, method(:Integer), comment: "Numeric error identifier"
+  option :message, proc(&:to_s), comment: "Human-readable error description"
+  option :severity, proc(&:to_s), comment: "Either +Error+ of +Warning+"
+  option :params, proc(&:to_h), default: -> { {} }, comment: "Variable parts of message"
+
+  def self.new(source)
+    source = source.to_h.each_with_object({}) { |(k, v), obj| obj[k.to_sym] = v }
+    super(source)
   end
 
-  def to_s
-    message
-  end
+  alias :to_s :message
 
   def inspect
     "#<#{self.class.name} #{severity} #{code}: #{message.inspect}>"
