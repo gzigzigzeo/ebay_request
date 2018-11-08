@@ -54,10 +54,16 @@ class EbayRequest::Trading < EbayRequest::Base
   end
 
   def errors_for(response)
-    [response["Errors"]]
-      .flatten
-      .compact
-      .map { |err| [err["SeverityCode"], err["ErrorCode"], err["LongMessage"]] }
+    [response["Errors"]].flatten.compact.map do |error|
+      EbayRequest::ErrorItem.new(
+        severity: error["SeverityCode"],
+        code:     error["ErrorCode"],
+        message:  error["LongMessage"],
+        params:   Hash[[error["ErrorParameters"]].flatten.compact.map do |p|
+          [p["ParamID"], p["Value"]]
+        end],
+      )
+    end
   end
 
   def request(*)

@@ -27,15 +27,15 @@ class EbayRequest::Response
   end
 
   def severity(severity)
-    Hash[errors_data.map { |s, c, m| [c.to_i, m] if s == severity }.compact]
+    errors_data.select { |error_item| error_item.severity == severity }
   end
 
   def error_class
-    fatal_code = (errors.keys.map(&:to_i) & fatal_errors.keys).first
+    fatal_code = (errors.map(&:code) & fatal_errors.keys).first
     fatal_errors[fatal_code] || EbayRequest::Error
   end
 
   def error
-    error_class.new(errors.values.join(", "), errors)
+    error_class.new(errors.join(", "), errors: errors, warnings: warnings)
   end
 end

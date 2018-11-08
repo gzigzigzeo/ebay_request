@@ -96,8 +96,9 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
     response = subject.response("getSellerProfiles", {})
 
     expect(response).not_to be_success
-    expect(response.errors).to eq(123 => "Some error")
-    expect(response.warnings).to eq(11 => "Some warning")
+    expect(response.errors).to contain_error(code: 123, message: "Some error")
+    expect(response.warnings).to \
+      contain_warning(code: 11, message: "Some warning")
   end
 
   context("using IAF token") do
@@ -135,8 +136,8 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 
       expect(token_manager).to have_received(:refresh!)
       expect(response).to be_success
-      expect(response.errors).to eq({})
-      expect(response.warnings).to eq({})
+      expect(response.errors).to be_empty
+      expect(response.warnings).to be_empty
       expect(response.data!).to be
       expect(api).to have_been_requested.twice
     end

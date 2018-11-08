@@ -84,6 +84,9 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 <LongMessage>Some other warning</LongMessage>
 </Errors></AddItemResponse>)
   end
+  let(:response_with_multiple_errors_and_params) do
+    File.read("spec/fixtures/response_with_multiple_parameterized_errors.xml")
+  end
 
   it "#response with no errors or warnings" do
     stub_request(
@@ -98,8 +101,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).to be_success
-    expect(response.errors).to eq({})
-    expect(response.warnings).to eq({})
+    expect(response.errors).to be_empty
+    expect(response.warnings).to be_empty
 
     expect(response.data!).to be
   end
@@ -117,10 +120,10 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq(
-      123 => "This listing may be identical to test item"
+    expect(response.errors).to contain_error(
+      code: 123, message: "This listing may be identical to test item"
     )
-    expect(response.warnings).to eq({})
+    expect(response.warnings).to be_empty
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error,
@@ -143,8 +146,9 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).to be_success
-    expect(response.errors).to eq({})
-    expect(response.warnings).to eq(42 => "Some warning")
+    expect(response.errors).to be_empty
+    expect(response.warnings).to \
+      contain_warning(code: 42, message: "Some warning")
     expect(response.data!).to be
   end
 
@@ -161,11 +165,12 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq(
-      11  => "Error 1",
-      123 => "This listing may be identical to test item"
+    expect(response.errors).to contain_error(code: 11, message: "Error 1")
+    expect(response.errors).to contain_error(
+      code: 123, message: "This listing may be identical to test item"
     )
-    expect(response.warnings).to eq(57 => "Some other warning")
+    expect(response.warnings).to \
+      contain_warning(code: 57, message: "Some other warning")
 
     expect(EbayRequest).to_not receive(:log_warn)
 
@@ -173,6 +178,22 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
       EbayRequest::Error,
       "Error 1, This listing may be identical to test item"
     )
+  end
+
+  it "#response with multiple parameterized errors" do
+    stub_request(:post, "https://api.sandbox.ebay.com/ws/api.dll")
+      .with(body: failing_request, headers: headers)
+      .to_return(status: 200, body: response_with_multiple_errors_and_params)
+
+    response = subject.response("AddItem", Item: { Title: "i" })
+
+    expect { response.data! }.to raise_error(EbayRequest::Error) do |ex|
+      expect(ex.errors.size).to eq(2)
+      expect(ex.errors).to \
+        contain_error(code: 21916260, params: eq("0" => "3.50"))
+      expect(ex.errors).to \
+        contain_error(code: 21919309, params: include("2" => "Gender"))
+    end
   end
 
   it "#response with specific error" do
@@ -188,8 +209,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     response = subject.response("AddItem", Item: { Title: "i" })
 
     expect(response).not_to be_success
-    expect(response.errors).to eq(
-      291 => "This listing may be identical to test item"
+    expect(response.errors).to contain_error(
+      code: 291, message: "This listing may be identical to test item"
     )
     expect(EbayRequest).to_not receive(:log_warn)
     expect { response.data! }.to raise_error(
@@ -217,8 +238,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
 
       expect(token_manager).to have_received(:refresh!)
       expect(response).to be_success
-      expect(response.errors).to eq({})
-      expect(response.warnings).to eq({})
+      expect(response.errors).to be_empty
+      expect(response.warnings).to be_empty
       expect(response.data!).to be
       expect(api).to have_been_requested.twice
     end

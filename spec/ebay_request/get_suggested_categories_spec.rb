@@ -109,8 +109,8 @@ describe EbayRequest::Trading, "GetSuggestedCategories" do
                                 WarningLevel:  "Low"
 
     expect(response).to be_success
-    expect(response.errors).to eq({})
-    expect(response.warnings).to eq({})
+    expect(response.errors).to be_empty
+    expect(response.warnings).to be_empty
 
     expect(response.data!).to be
   end
@@ -127,8 +127,10 @@ describe EbayRequest::Trading, "GetSuggestedCategories" do
                                 WarningLevel:  "Low"
 
     expect(response).not_to be_success
-    expect(response.errors).to eq 11 => "Something got wrong"
-    expect(response.warnings).to eq 57 => "Some other warning"
+    expect(response.errors).to \
+      contain_error(code: 11, message: "Something got wrong")
+    expect(response.warnings).to \
+      contain_warning(code: 57, message: "Some other warning")
 
     expect(EbayRequest).to_not receive(:log_warn)
 
