@@ -9,11 +9,11 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   def payload(callname, request)
     key_converter = ->(key) { EbayRequest::Inflector.camelcase_lower(key) }
-    request       = Gyoku.xml(request, key_converter: key_converter)
+    request_data = Gyoku.xml(request, key_converter: key_converter)
+    request_url = "http://www.ebay.com/marketplace/selling/v1/services"
 
     %(<?xml version="1.0" encoding="utf-8"?>\
-<#{callname}Request xmlns="http://www.ebay.com/marketplace/selling">\
-#{request}</#{callname}Request>)
+<#{callname}Request xmlns="#{request_url}">#{request_data}</#{callname}Request>)
   end
 
   def endpoint

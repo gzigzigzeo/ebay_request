@@ -7,6 +7,7 @@ class EbayRequest::Trading < EbayRequest::Base
   class TokenValidationFailed < EbayRequest::Error; end
   class IAFTokenExpired < TokenValidationFailed; end
   class AccountSuspended < EbayRequest::Error; end
+  class AccountClosed < EbayRequest::Error; end
   class ApplicationInvalid < EbayRequest::Error; end
 
   private
@@ -83,7 +84,16 @@ class EbayRequest::Trading < EbayRequest::Base
     16_110     => TokenValidationFailed,
     21_916_984 => TokenValidationFailed,
     21_917_053 => IAFTokenExpired,
+    32         => AccountSuspended,
+    212        => AccountSuspended,
     841        => AccountSuspended,
+    20_960     => AccountSuspended,
+    21_532     => AccountSuspended,
+    21_548     => AccountSuspended,
+    21_915_268 => AccountSuspended,
+    31         => AccountClosed,
+    11_106     => AccountClosed,
+    21_930     => AccountClosed,
     127        => ApplicationInvalid,
   }.freeze
 end
