@@ -1,4 +1,7 @@
 language: ruby
 rvm:
   - 2.3
-before_install: gem install bundler -v 1.11.2
+before_install:
+  - rm /home/travis/.rvm/gems/ruby-2.3.7@global/specifications/bundler-2.0.1.gemspec || true
+  - gem uninstall bundler || true
+  - gem install bundler -v 1.11.2
