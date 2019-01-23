@@ -244,7 +244,7 @@
 
 - globalid: EBAY-MOTOR
   id: 100
-  name: US Motors
+  name: eBayMotors
   code: MOTOR
   currency: USD
   language: en
