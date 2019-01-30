@@ -282,7 +282,7 @@
   code: BENL
   currency: EUR
   language: de
-  domain: ebay.nl
+  domain: ebay.be
   metric: metric
   country: BE
   min_fixed_price: # no limit at https://pages.benl.ebay.be/help/sell/fixed-price.html
