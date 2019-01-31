@@ -22,7 +22,9 @@ describe EbayRequest::BusinessPolicies do
 
   let(:headers) do
     {
-      "Content-Type"              => "text/xml",
+      "Accept"                    => "text/xml",
+      "Accept-Charset"            => "utf-8",
+      "Content-Type"              => "text/xml; charset=utf-8",
       "X-EBAY-SOA-SECURITY-TOKEN" => "some_token",
       "X-EBAY-SOA-SERVICE-NAME"   => "SellerProfilesManagementService",
       "X-EBAY-SOA-OPERATION-NAME" => "getSellerProfiles",
@@ -110,7 +112,9 @@ xmlns="http://www.ebay.com/marketplace/selling/v1/services">\
 
     let(:headers) do
       {
-        "Content-Type"                 => "text/xml",
+        "Accept"                       => "text/xml",
+        "Accept-Charset"               => "utf-8",
+        "Content-Type"                 => "text/xml; charset=utf-8",
         "X-EBAY-SOA-SECURITY-IAFTOKEN" => "some_token",
         "X-EBAY-SOA-SERVICE-NAME"      => "SellerProfilesManagementService",
         "X-EBAY-SOA-OPERATION-NAME"    => "getSellerProfiles",

@@ -17,7 +17,6 @@ class EbayRequest::Shopping < EbayRequest::Base
 
   def headers(callname)
     super.merge(
-      "Content-Type" => "text/xml",
       "X-EBAY-API-APP-ID" => config.appid,
       "X-EBAY-API-VERSION" => config.version.to_s,
       "X-EBAY-API-CALL-NAME" => callname,

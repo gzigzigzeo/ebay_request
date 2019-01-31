@@ -38,7 +38,6 @@ class EbayRequest::Trading < EbayRequest::Base
 
   def default_headers(callname)
     {
-      "Content-Type" => "text/xml",
       "X-EBAY-API-APP-NAME" => config.appid,
       "X-EBAY-API-DEV-NAME" => config.devid,
       "X-EBAY-API-CERT-NAME" => config.certid,

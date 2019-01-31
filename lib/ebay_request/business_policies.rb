@@ -30,7 +30,6 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   def default_headers(callname)
     {
-      "Content-Type"              => "text/xml",
       "X-EBAY-SOA-CONTENT-TYPE"   => "XML",
       "X-EBAY-SOA-GLOBAL-ID"      => global_id(siteid.to_i),
       "X-EBAY-SOA-SERVICE-NAME"   => SERVICE_NAME,

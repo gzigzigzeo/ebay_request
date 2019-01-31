@@ -41,7 +41,12 @@ class EbayRequest::Base
   end
 
   def headers(_callname)
-    @options[:headers] || {}
+    {
+      "Accept" => "text/xml",
+      "Accept-Charset" => "utf-8",
+      "Content-Type" => "text/xml; charset=utf-8",
+      **options.fetch(:headers, {})
+    }
   end
 
   def payload(_callname, _request)
