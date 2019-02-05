@@ -156,6 +156,17 @@
   country: BE
   min_fixed_price: 1.00 # https://pages.befr.ebay.be/help/sell/fixed-price.html
 
+- globalid: EBAY-NLBE
+  id: 123
+  name: Belgium_Dutch
+  code: BENL
+  currency: EUR
+  language: de
+  domain: ebay.be
+  metric: metric
+  country: BE
+  min_fixed_price: # no limit at https://pages.benl.ebay.be/help/sell/fixed-price.html
+
 - globalid: EBAY-FRCA
   id: 210
   name: CanadaFrench
@@ -244,7 +255,7 @@
 
 - globalid: EBAY-MOTOR
   id: 100
-  name: US Motors
+  name: eBayMotors
   code: MOTOR
   currency: USD
   language: en
@@ -275,17 +286,6 @@
   metric: metric
   country: NL
   min_fixed_price: # no limit at https://pages.ebay.nl/help/sell/fixed-price.html
-
-- globalid: EBAY-NLBE
-  id: 123
-  name: Belgium_Dutch
-  code: BENL
-  currency: EUR
-  language: de
-  domain: ebay.nl
-  metric: metric
-  country: BE
-  min_fixed_price: # no limit at https://pages.benl.ebay.be/help/sell/fixed-price.html
 
 - globalid: EBAY-PH
   id: 211
