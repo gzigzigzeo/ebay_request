@@ -151,7 +151,7 @@
   code: BEFR
   currency: EUR
   language: fr
-  domain: ebay.be
+  domain: befr.ebay.be
   metric: metric
   country: BE
   min_fixed_price: 1.00 # https://pages.befr.ebay.be/help/sell/fixed-price.html
@@ -161,8 +161,8 @@
   name: Belgium_Dutch
   code: BENL
   currency: EUR
-  language: de
-  domain: ebay.be
+  language: nl
+  domain: benl.ebay.be
   metric: metric
   country: BE
   min_fixed_price: # no limit at https://pages.benl.ebay.be/help/sell/fixed-price.html
@@ -173,7 +173,7 @@
   code: CAFR
   currency: CAD
   language: fr
-  domain: ebay.ca
+  domain: cafr.ebay.ca
   metric: metric
   country: CA
   shipping_zones: [CA, Americas, NorthAmerica]
