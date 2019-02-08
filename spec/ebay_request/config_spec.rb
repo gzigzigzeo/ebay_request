@@ -56,7 +56,7 @@ describe EbayRequest::Config do
     end
 
     it "returns gtc_available for 71" do
-      expect(described_class.sites_by_id[71]).not_to be_gtc_available
+      expect(described_class.sites_by_id[71]).to be_gtc_available
     end
 
     it "raises when gtc availability asked for 207" do

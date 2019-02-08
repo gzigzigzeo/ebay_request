@@ -124,7 +124,7 @@
   max_insertion_fee: 0.35
   free_pictures: 12
   subtitle_fee: 0.41
-  gtc_available: false
+  gtc_available: true
   min_fixed_price: 0.99 # https://pages.ebay.es/help/sell/fixed-price.html
 
 - globalid: EBAY-FR
@@ -142,7 +142,7 @@
   free_pictures: 1
   picture_fee: 0.13
   subtitle_fee: 0.42
-  gtc_available: false
+  gtc_available: true
   min_fixed_price: 1.00 # https://pages.ebay.fr/help/sell/fixed-price.html
 
 - globalid: EBAY-FRBE
@@ -250,7 +250,7 @@
   free_pictures: 1
   picture_fee: 0.12
   subtitle_fee: 0.41
-  gtc_available: false
+  gtc_available: true
   min_fixed_price: 1.00 # https://pages.ebay.it/help/sell/fixed-price.html
 
 - globalid: EBAY-MOTOR
