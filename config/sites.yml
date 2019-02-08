@@ -259,7 +259,7 @@
   code: MOTOR
   currency: USD
   language: en
-  domain: ebay.com/motors
+  domain: ebay.com
   metric: imperial
   country: US
   shipping_zones: [US, Americas, NorthAmerica]
