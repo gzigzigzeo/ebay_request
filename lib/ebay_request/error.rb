@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EbayRequest::Error < StandardError
+  class BlankResponse < self; end
+
   def initialize(msg = "EbayRequest error", errors: [], warnings: [])
     super(msg)
     @errors   = errors

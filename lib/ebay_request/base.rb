@@ -60,7 +60,10 @@ class EbayRequest::Base
   def process(response, callname)
     data = response["#{callname}Response"]
 
-    raise EbayRequest::Error, "#{callname} response is blank" if data.nil?
+    if data.nil?
+      raise EbayRequest::Error::BlankResponse, "#{callname} response is blank"
+    end
+
     EbayRequest::Response.new(
       callname, data, errors_for(data), self.class::FATAL_ERRORS
     )
