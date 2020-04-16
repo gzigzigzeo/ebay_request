@@ -4,7 +4,7 @@
 class EbayRequest::ErrorItem
   extend Dry::Initializer
 
-  option :code, method(:Integer), comment: "Numeric error identifier"
+  option :code, proc(&:to_s), comment: "Numeric error identifier"
   option :message, proc(&:to_s), comment: "Human-readable error description"
   option :severity, proc(&:to_s), comment: "Either +Error+ of +Warning+"
   option :params, proc(&:to_h), default: -> { {} }, comment: "Variable parts of message"
