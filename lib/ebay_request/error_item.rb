@@ -4,10 +4,10 @@
 class EbayRequest::ErrorItem
   extend Dry::Initializer
 
-  option :code, method(:Integer), comment: "Numeric error identifier"
-  option :message, proc(&:to_s), comment: "Human-readable error description"
+  option :code,     proc(&:to_i), comment: "Numeric error identifier"
+  option :message,  proc(&:to_s), comment: "Human-readable error description"
   option :severity, proc(&:to_s), comment: "Either +Error+ of +Warning+"
-  option :params, proc(&:to_h), default: -> { {} }, comment: "Variable parts of message"
+  option :params,   proc(&:to_h), default: -> { {} }, comment: "Variable parts of message"
 
   def self.new(source)
     source = source.to_h.each_with_object({}) { |(k, v), obj| obj[k.to_sym] = v }
