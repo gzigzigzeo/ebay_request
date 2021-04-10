@@ -103,10 +103,10 @@ describe EbayRequest::Trading, "GetSuggestedCategories" do
       .to_return(status: 200, body: successful_response)
 
     response = subject.response "GetSuggestedCategories",
-                                Query:         "Cool Thing",
+                                Query: "Cool Thing",
                                 ErrorLanguage: "en_US",
-                                MessageID:     "foobar",
-                                WarningLevel:  "Low"
+                                MessageID: "foobar",
+                                WarningLevel: "Low"
 
     expect(response).to be_success
     expect(response.errors).to be_empty
@@ -121,10 +121,10 @@ describe EbayRequest::Trading, "GetSuggestedCategories" do
       .to_return(status: 200, body: response_with_errors)
 
     response = subject.response "GetSuggestedCategories",
-                                Query:         "Cool Thing",
+                                Query: "Cool Thing",
                                 ErrorLanguage: "en_US",
-                                MessageID:     "foobar",
-                                WarningLevel:  "Low"
+                                MessageID: "foobar",
+                                WarningLevel: "Low"
 
     expect(response).not_to be_success
     expect(response.errors).to \

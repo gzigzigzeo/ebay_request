@@ -10,11 +10,10 @@ class EbayRequest::ErrorItem
   option :params,   proc(&:to_h), default: -> { {} }, comment: "Variable parts of message"
 
   def self.new(source)
-    source = source.to_h.each_with_object({}) { |(k, v), obj| obj[k.to_sym] = v }
-    super(source)
+    super(source.to_h.transform_keys(&:to_sym))
   end
 
-  alias :to_s :message
+  alias to_s message
 
   def inspect
     "#<#{self.class.name} #{severity} #{code}: #{message.inspect}>"

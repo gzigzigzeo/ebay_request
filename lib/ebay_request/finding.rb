@@ -30,8 +30,8 @@ class EbayRequest::Finding < EbayRequest::Base
     [response.dig("errorMessage", "error")].flatten.compact.map do |error|
       EbayRequest::ErrorItem.new(
         severity: error["severity"],
-        code:     error["errorId"],
-        message:  error["message"],
+        code: error["errorId"],
+        message: error["message"]
       )
     end
   end

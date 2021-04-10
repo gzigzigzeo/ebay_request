@@ -31,9 +31,9 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   def default_headers(callname)
     {
-      "X-EBAY-SOA-CONTENT-TYPE"   => "XML",
-      "X-EBAY-SOA-GLOBAL-ID"      => global_id(siteid.to_i),
-      "X-EBAY-SOA-SERVICE-NAME"   => SERVICE_NAME,
+      "X-EBAY-SOA-CONTENT-TYPE" => "XML",
+      "X-EBAY-SOA-GLOBAL-ID" => global_id(siteid.to_i),
+      "X-EBAY-SOA-SERVICE-NAME" => SERVICE_NAME,
       "X-EBAY-SOA-OPERATION-NAME" => callname,
     }
   end
@@ -50,18 +50,20 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   def errors_for(response)
     [response.dig("errorMessage", "error")].flatten.compact.map do |error|
-      params = error["parameter"]&.each_with_object({}) do |item, obj|
-        name = item["name"].tr(" ", "").camelize(:lower)
-        obj[name] = item["__content__"]
-      end
-
       EbayRequest::ErrorItem.new(
         severity: error["severity"],
-        code:     error["errorId"],
-        message:  error["message"],
-        params:   params.to_h,
+        code: error["errorId"],
+        message: error["message"],
+        params: params_from(error)
       )
     end
+  end
+
+  def params_from(error)
+    error["parameter"]&.each_with_object({}) do |item, obj|
+      name = item["name"].tr(" ", "").camelize(:lower)
+      obj[name] = item["__content__"]
+    end.to_h
   end
 
   def request(*)
@@ -69,6 +71,7 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
     super.tap do |response|
       next if retried || options[:iaf_token_manager].nil?
       next if response.success? || response.error_class > IAFTokenExpired
+
       raise response.error
     end
   rescue IAFTokenExpired

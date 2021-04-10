@@ -19,9 +19,9 @@ class OmniAuth::Strategies::Ebay
 
   info do
     {
-      user_id:    raw_info["UserID"],
+      user_id: raw_info["UserID"],
       auth_token: @auth_token,
-      email:      raw_info["Email"],
+      email: raw_info["Email"],
       full_name: full_name,
       first_name: parsed_name[0],
       last_name: parsed_name[1],

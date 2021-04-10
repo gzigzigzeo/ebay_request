@@ -29,11 +29,11 @@ class EbayRequest::Shopping < EbayRequest::Base
     [response["Errors"]].flatten.compact.map do |error|
       EbayRequest::ErrorItem.new(
         severity: error["SeverityCode"],
-        code:     error["ErrorCode"],
-        message:  error["LongMessage"],
-        params:   Hash[[error["ErrorParameters"]].flatten.compact.map do |p|
+        code: error["ErrorCode"],
+        message: error["LongMessage"],
+        params: Hash[[error["ErrorParameters"]].flatten.compact.map do |p|
           [p["ParamID"], p["Value"]]
-        end],
+        end]
       )
     end
   end
