@@ -45,7 +45,7 @@ class EbayRequest::Base
       "Accept" => "text/xml",
       "Accept-Charset" => "utf-8",
       "Content-Type" => "text/xml; charset=utf-8",
-      **options.fetch(:headers, {})
+      **options.fetch(:headers, {}),
     }
   end
 
@@ -60,9 +60,7 @@ class EbayRequest::Base
   def process(response, callname)
     data = response["#{callname}Response"]
 
-    if data.nil?
-      raise EbayRequest::Error::BlankResponse, "#{callname} response is blank"
-    end
+    raise EbayRequest::Error::BlankResponse, "#{callname} response is blank" if data.nil?
 
     EbayRequest::Response.new(
       callname, data, errors_for(data), self.class::FATAL_ERRORS

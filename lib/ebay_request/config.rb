@@ -13,9 +13,9 @@ class EbayRequest::Config
   alias sandbox? sandbox
 
   def initialize
-    @sandbox ||= true
-    @version ||= 941
-    @timeout ||= 60
+    @sandbox = true
+    @version = 941
+    @timeout = 60
   end
 
   def validate!

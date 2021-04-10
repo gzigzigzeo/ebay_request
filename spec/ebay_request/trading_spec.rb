@@ -190,9 +190,9 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     expect { response.data! }.to raise_error(EbayRequest::Error) do |ex|
       expect(ex.errors.size).to eq(2)
       expect(ex.errors).to \
-        contain_error(code: 21916260, params: eq("0" => "3.50"))
+        contain_error(code: 21_916_260, params: eq("0" => "3.50"))
       expect(ex.errors).to \
-        contain_error(code: 21919309, params: include("2" => "Gender"))
+        contain_error(code: 21_919_309, params: include("2" => "Gender"))
     end
   end
 

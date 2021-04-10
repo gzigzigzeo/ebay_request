@@ -23,6 +23,7 @@ class EbayRequest::Trading < EbayRequest::Base
 
   def creds
     return if options[:token].nil? || options[:iaf_token_manager]
+
     %(<RequesterCredentials>\
 <eBayAuthToken>#{options[:token]}</eBayAuthToken>\
 </RequesterCredentials>)
@@ -49,6 +50,7 @@ class EbayRequest::Trading < EbayRequest::Base
 
   def auth_header
     return {} unless options[:iaf_token_manager]
+
     { "X-EBAY-API-IAF-TOKEN" => options[:iaf_token_manager].access_token }
   end
 
@@ -56,11 +58,11 @@ class EbayRequest::Trading < EbayRequest::Base
     [response["Errors"]].flatten.compact.map do |error|
       EbayRequest::ErrorItem.new(
         severity: error["SeverityCode"],
-        code:     error["ErrorCode"],
-        message:  error["LongMessage"],
-        params:   Hash[[error["ErrorParameters"]].flatten.compact.map do |p|
+        code: error["ErrorCode"],
+        message: error["LongMessage"],
+        params: Hash[[error["ErrorParameters"]].flatten.compact.map do |p|
           [p["ParamID"], p["Value"]]
-        end],
+        end]
       )
     end
   end
@@ -70,6 +72,7 @@ class EbayRequest::Trading < EbayRequest::Base
     super.tap do |response|
       next if retried || options[:iaf_token_manager].nil?
       next if response.success? || response.error_class > IAFTokenExpired
+
       raise response.error
     end
   rescue IAFTokenExpired
@@ -80,25 +83,25 @@ class EbayRequest::Trading < EbayRequest::Base
 
   # http://developer.ebay.com/devzone/xml/docs/reference/ebay/errors/errormessages.htm
   FATAL_ERRORS = {
-    291        => IllegalItemStateError,
-    1047       => IllegalItemStateError,
+    291 => IllegalItemStateError,
+    1047 => IllegalItemStateError,
     21_919_188 => ItemLimitReachedError,
     21_919_165 => DailyItemCallLimitReachedError,
-    931        => TokenValidationFailed,
-    17_470     => TokenValidationFailed,
-    16_110     => TokenValidationFailed,
+    931 => TokenValidationFailed,
+    17_470 => TokenValidationFailed,
+    16_110 => TokenValidationFailed,
     21_916_984 => TokenValidationFailed,
     21_917_053 => IAFTokenExpired,
-    32         => AccountSuspended,
-    212        => AccountSuspended,
-    841        => AccountSuspended,
-    20_960     => AccountSuspended,
-    21_532     => AccountSuspended,
-    21_548     => AccountSuspended,
+    32 => AccountSuspended,
+    212 => AccountSuspended,
+    841 => AccountSuspended,
+    20_960 => AccountSuspended,
+    21_532 => AccountSuspended,
+    21_548 => AccountSuspended,
     21_915_268 => AccountSuspended,
-    31         => AccountClosed,
-    11_106     => AccountClosed,
-    21_930     => AccountClosed,
-    127        => ApplicationInvalid,
+    31 => AccountClosed,
+    11_106 => AccountClosed,
+    21_930 => AccountClosed,
+    127 => ApplicationInvalid,
   }.freeze
 end

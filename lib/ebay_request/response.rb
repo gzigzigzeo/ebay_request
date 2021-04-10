@@ -15,6 +15,7 @@ class EbayRequest::Response
 
   def data!
     raise error unless success?
+
     data
   end
 
