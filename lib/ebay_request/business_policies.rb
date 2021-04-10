@@ -49,10 +49,16 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   def errors_for(response)
     [response.dig("errorMessage", "error")].flatten.compact.map do |error|
+      params = error["parameter"]&.each_with_object({}) do |item, obj|
+        name = item["name"].tr(" ", "").camelize(:lower)
+        obj[name] = item["__content__"]
+      end
+
       EbayRequest::ErrorItem.new(
         severity: error["severity"],
         code:     error["errorId"],
         message:  error["message"],
+        params:   params.to_h,
       )
     end
   end
