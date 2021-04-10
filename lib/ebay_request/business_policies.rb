@@ -2,6 +2,7 @@
 
 class EbayRequest::BusinessPolicies < EbayRequest::Base
   IAFTokenExpired = Class.new(EbayRequest::Error)
+  DuplicationError = Class.new(EbayRequest::Error)
 
   private
 
@@ -78,5 +79,6 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
 
   FATAL_ERRORS = {
     21_917_053 => IAFTokenExpired,
+    178_149 => DuplicationError,
   }.freeze
 end
