@@ -60,10 +60,17 @@ class EbayRequest::BusinessPolicies < EbayRequest::Base
   end
 
   def params_from(error)
-    error["parameter"]&.each_with_object({}) do |item, obj|
+    params = error["parameter"]
+    params = case params
+             when Array then params
+             when Hash  then [params]
+             else []
+             end
+
+    params.each_with_object({}) do |item, obj|
       name = item["name"].tr(" ", "").camelize(:lower)
       obj[name] = item["__content__"]
-    end.to_h
+    end
   end
 
   def request(*)
