@@ -141,7 +141,8 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
       )
       .to_return(status: 200, body: response_with_warning)
 
-    expect(EbayRequest).to receive(:log_warn).and_return(true)
+    expect(EbayRequest).to receive(:log_warnings).and_return(true)
+    expect(EbayRequest).to receive(:log_version_mismatch).and_return(true)
 
     response = subject.response("AddItem", Item: { Title: "i" })
 
@@ -172,7 +173,7 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     expect(response.warnings).to \
       contain_warning(code: 57, message: "Some other warning")
 
-    expect(EbayRequest).to_not receive(:log_warn)
+    expect(EbayRequest).to_not receive(:log_warnings)
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error,
@@ -212,7 +213,7 @@ xmlns="urn:ebay:apis:eBLBaseComponents">\
     expect(response.errors).to contain_error(
       code: 291, message: "This listing may be identical to test item"
     )
-    expect(EbayRequest).to_not receive(:log_warn)
+    expect(EbayRequest).to_not receive(:log_warnings)
     expect { response.data! }.to raise_error(
       EbayRequest::Trading::IllegalItemStateError,
       "This listing may be identical to test item"

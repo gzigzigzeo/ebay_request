@@ -132,7 +132,8 @@ describe EbayRequest::Trading, "GetSuggestedCategories" do
     expect(response.warnings).to \
       contain_warning(code: 57, message: "Some other warning")
 
-    expect(EbayRequest).to_not receive(:log_warn)
+    expect(EbayRequest).to_not receive(:log_warning)
+    expect(EbayRequest).to_not receive(:log_version_mismatch)
 
     expect { response.data! }.to raise_error EbayRequest::Error,
                                              "Something got wrong"
