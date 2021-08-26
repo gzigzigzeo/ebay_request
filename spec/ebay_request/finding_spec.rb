@@ -52,6 +52,7 @@ xmlns="http://www.ebay.com/marketplace/search/v1/services">\
 
     expect(response).not_to be_success
     expect(response.errors).to contain_error(code: 2, message: "Keywords value required.")
+    expect(response.version).to eq "1.13.0"
 
     expect { response.data! }.to raise_error(
       EbayRequest::Error, /Keywords value required/

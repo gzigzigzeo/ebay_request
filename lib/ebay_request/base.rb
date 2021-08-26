@@ -94,7 +94,8 @@ class EbayRequest::Base
       time: time,
       warnings: response_object&.warnings,
       errors: response_object&.errors,
-      success: response_object&.success?
+      success: response_object&.success?,
+      version: response_object&.version
     )
   end
   # rubocop:enable Metrics/MethodLength

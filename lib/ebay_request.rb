@@ -45,7 +45,8 @@ module EbayRequest
 
     def log(options)
       log_info(options)
-      log_warn(options)
+      log_warnings(options)
+      log_version_mismatch(options)
       log_json(options)
     end
 
@@ -54,6 +55,7 @@ module EbayRequest
       return if logger.nil?
 
       logger.info "[EbayRequest] | Url      | #{out[:url]}"
+      logger.info "[EbayRequest] | Version  | #{out[:version]}"
       logger.info "[EbayRequest] | Headers  | #{out[:headers]}"
       logger.info "[EbayRequest] | Body     | #{out[:request_payload]}"
       logger.info "[EbayRequest] | Response | #{fix_utf out[:response_payload]}"
@@ -61,11 +63,21 @@ module EbayRequest
     end
     # rubocop:enable Metrics/AbcSize
 
-    def log_warn(out)
+    def log_warnings(out)
       return if warn_logger.nil? || out[:warnings].empty?
 
       warn_logger.warn(
         "[EbayRequest] | #{out[:callname]} | #{out[:warnings].inspect}"
+      )
+    end
+
+    def log_version_mismatch(out)
+      return if warn_logger.nil? || out[:version].nil? ||
+                out[:version].to_s == config.version.to_s
+
+      msg = "Version mismatch: #{out[:version]} != #{config.version}"
+      warn_logger.warn(
+        "[EbayRequest] | #{out[:callname]} | #{msg}"
       )
     end
 

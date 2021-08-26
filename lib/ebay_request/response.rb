@@ -39,4 +39,8 @@ class EbayRequest::Response
   def error
     error_class.new(errors.join(", "), errors: errors, warnings: warnings)
   end
+
+  def version
+    data["Version"] || data["version"]
+  end
 end
