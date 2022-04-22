@@ -34,7 +34,7 @@ xmlns="http://www.ebay.com/marketplace/search/v1/services">\
 
   it "#response" do
     stub_request(
-      :post, "http://svcs.sandbox.ebay.com/services/search/FindingService/v1"
+      :post, "https://svcs.sandbox.ebay.com/services/search/FindingService/v1"
     ).with(
       body: failing_request,
       headers: {

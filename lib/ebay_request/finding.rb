@@ -12,7 +12,7 @@ class EbayRequest::Finding < EbayRequest::Base
   end
 
   def endpoint
-    "http://svcs%{sandbox}.ebay.com/services/search/FindingService/v1"
+    "https://svcs%{sandbox}.ebay.com/services/search/FindingService/v1"
   end
 
   def headers(callname)
