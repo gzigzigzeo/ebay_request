@@ -6,6 +6,9 @@ class EbayRequest::Config
   attr_accessor :devid
   attr_accessor :runame
 
+  attr_accessor :digital_signature_jwe
+  attr_reader :digital_signature_private_key
+
   attr_accessor :sandbox
   attr_accessor :version
   attr_accessor :timeout
@@ -23,6 +26,22 @@ class EbayRequest::Config
       value = public_send(attr)
       raise "Set EbayRequest.config.#{attr}" if value.nil? || value.empty?
     end
+  end
+
+  def validate_signature!
+    %w[digital_signature_jwe digital_signature_private_key].each do |attr|
+      value = public_send(attr)
+      raise "Set EbayRequest.config.#{attr}" if (value.nil? || value.empty?)
+    end
+  end
+
+  def digital_signature_private_key=(value)
+    return unless value
+
+    @digital_signature_private_key =
+      "-----BEGIN RSA PRIVATE KEY-----" \
+    "\n#{value.scan(/.{0,63}/).join("\n")}" \
+    "-----END RSA PRIVATE KEY-----"
   end
 
   class << self

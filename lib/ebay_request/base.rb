@@ -14,15 +14,15 @@ class EbayRequest::Base
   def siteid
     @siteid ||=
       options[:siteid] ||
-      EbayRequest::Config.site_id_from_globalid(options[:globalid]) ||
-      0
+        EbayRequest::Config.site_id_from_globalid(options[:globalid]) ||
+        0
   end
 
   def globalid
     @globalid ||=
       options[:globalid] ||
-      EbayRequest::Config.globalid_from_site_id(options[:siteid]) ||
-      "EBAY-US"
+        EbayRequest::Config.globalid_from_site_id(options[:siteid]) ||
+        "EBAY-US"
   end
 
   def response(callname, payload)
@@ -78,6 +78,17 @@ class EbayRequest::Base
     h = headers(callname)
     b = payload(callname, request)
 
+    if options[:digital_signature]
+      h = EbayRequest::DigitalSignature.new(
+        body: b,
+        headers: h,
+        url: url.to_s,
+        http_method: 'POST',
+        config: config
+      ).call
+    end
+
+    binding.pry
     post = Net::HTTP::Post.new(url.path, h)
     post.body = b
 
