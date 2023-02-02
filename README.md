@@ -2,6 +2,8 @@
 
 eBay XML API request interface.
 
+> This gem is currently supported by the [ebaymag](https://ebaymag.com) team at [the corresponding fork](https://github.com/ebaymag/ebay_request). Please, send your issues and PR-s to that repository!
+
 ## Installation
 
 Add this line to your application's Gemfile:
